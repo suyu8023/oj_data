@@ -10,7 +10,6 @@ import time
 import re
 
 def make_url(src):
-    src = "https://cn.vjudge.net/contest/257734#rank"
     data = re.findall('\D+',src.split("#")[0])
     id = re.findall('\d+',src.split("#")[0])
     url = data[0] + 'rank/single/' + id[0]
@@ -69,20 +68,18 @@ def getdata_json(url):
                 'NOKIA5700/ UCWEB7.0.2.37/28/999',
                 'Openwave/ UCWEB7.0.2.37/28/999',
                 'Mozilla/4.0 (compatible; MSIE 6.0; ) Opera/UCWEB7.0.2.37/28/999',]
-        header = {'User-Agent':'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0'}
+        header = {'User Agent': "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 SE 2.X MetaSr 1.0"}
         r = requests.get(url=url, headers=header)
         if r.status_code == 200:
             print(url)
             print(r.text)
-            print(type(json.loads(r.text)))
-            print(json.loads(r.text)['id'])
-        #print(id)
+            return json.loads(r.text)
     except:
         print("爬取失败")
         return None
 
 
 if __name__=='__main__':
-    src = "https://cn.vjudge.net/contest/257734#rank"
+    src = input("比赛网址：")
     url = make_url(src)
     getdata_json(url)
