@@ -69,8 +69,7 @@ class crawl_data():
                 'User Agent': "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 SE 2.X MetaSr 1.0"}
             r = requests.get(url=url, headers=header)
             if r.status_code == 200:
-                print(url)
-                print(r.text)
+                time.sleep(30)
                 return json.loads(r.text)
         except:
             print("爬取失败")
@@ -97,12 +96,3 @@ class crawl_data():
 
     #POJ
     def POJ_make_url(self, src):
-
-
-
-
-
-if __name__=='__main__':
-    src = input("比赛网址：")
-    url = make_url(src)
-    getdata_json(url)

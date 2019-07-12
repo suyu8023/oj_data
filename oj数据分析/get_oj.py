@@ -1,12 +1,7 @@
 '''
-2019/7/9
-获取vj比赛数据
-2019/7/9  问题：代码没错误，没有运行结果
-          解决：Ubuntu系统上运行没有问题
-          总结：玄学
-2019/7/10 问题：加密比赛需要cookie
-          解决：
-          总结：
+2019/7/10
+SDUTOJ数据获取
+
 '''
 from bs4 import BeautifulSoup
 import requests
@@ -16,10 +11,6 @@ import time
 import re
 
 def make_url(src):
-    data = re.findall('\D+',src.split("#")[0])
-    id = re.findall('\d+',src.split("#")[0])
-    url = data[0] + 'rank/single/' + id[0]
-    return url
 
 def getdata_json(url):
     try:
@@ -73,24 +64,19 @@ def getdata_json(url):
                 'UCWEB7.0.2.37/28/999',
                 'NOKIA5700/ UCWEB7.0.2.37/28/999',
                 'Openwave/ UCWEB7.0.2.37/28/999',
-                'Mozilla/4.0 (compatible; MSIE 6.0; ) Opera/UCWEB7.0.2.37/28/999',]
+                'Mozilla/4.0 (compatible; MSIE 6.0; ) Opera/UCWEB7.0.2.37/28/999', ]
         header = {
-            #'cookie':"_ga=GA1.2.1302475107.1562748137; _gid=GA1.2.1829373607.1562748137; JSESSIONID=FF5B70AC70E7C4C5540E6BA41CB82A6D; Jax.Q=17121202036|9I67HAMMIEG4WM4M9MX2C5OY5B0HD8",
             'User Agent': "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 SE 2.X MetaSr 1.0"}
         r = requests.get(url=url, headers=header, timeout=30)
         print(r)
         if r.status_code == 200:
-            time.sleep(60)
+            # print(url)
             print(r.text)
-            #return json.loads(r.text)
+            # return json.loads(r.text)
     except:
         print("爬取失败")
         return None
 
 
-if __name__=='__main__':
-    src = input("比赛网址：")
-    #url = make_url(src)
-    getdata_json(src)
-# https://cn.vjudge.net/contest/242368
-# https://cn.vjudge.net/contest/rank/single/242368
+if __name__ == '__main__':
+    src = "https://acm.sdut.edu.cn/onlinejudge2/index.php/Home/Contest/contestranklist/cid/2962"
