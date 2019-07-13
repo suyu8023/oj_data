@@ -1,5 +1,5 @@
 '''
-2019/7/12
+2019/7/10
 SDUTOJ数据获取
 
 '''
@@ -10,8 +10,10 @@ import json
 import time
 import re
 
+def make_url(src):
+    pass
 
-def get_html(url):
+def getdata_json(url):
     try:
         user = ['Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0',
                 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0)',
@@ -64,42 +66,31 @@ def get_html(url):
                 'NOKIA5700/ UCWEB7.0.2.37/28/999',
                 'Openwave/ UCWEB7.0.2.37/28/999',
                 'Mozilla/4.0 (compatible; MSIE 6.0; ) Opera/UCWEB7.0.2.37/28/999', ]
-        header = {'User Agent': random.choice(user)}
+        header = {
+            'User Agent': random.choice(user),
+        "cookie":"Hm_lvt_ffc0a3cbaca7823cf2e81a8611a92d93=1562748127; _ga=GA1.3.168738533.1562748127; PHPSESSID=qb7n8m0vqo2cem0d886m08b6n0; _gid=GA1.3.1025147072.1562934709; _gat_gtag_UA_107784973_2=1; refer=%2F%2Facm.sdut.edu.cn%2Fonlinejudge2%2Findex.php%2FHome%2FContest%2Fproblemlist%2Fcid%2F2895"}
         r = requests.get(url=url, headers=header, timeout=30)
-        r.encoding = 'utf-8'
-        time.sleep(10) #蜗牛网速
+        #print(url)
+        time.sleep(10)
+        print(r)
         if r.status_code == 200:
+            print(r.text)
             return r.text
     except:
+        print("爬取失败")
         return None
-
-def change_time(timestamp):
-    time_list = timestamp.split(":")
-    return int(time_list[0]) * 3600 + int(time_list[1]) * 60 + int(time_list[2])
 
 def analyze_html(html):
     soup = BeautifulSoup(html, "html.parser")
     time.sleep(10)
     for line in soup.tbody.find_all('tr'):
-        person_data = line.text.split('\n')
-        length = len(person_data)
-        nickname = person_data[5].strip('\t')
-        solved = person_data[6]
-        for i in range(8,length-1):
-            timestamp = person_data[i].strip()# 未提交不记录
-            if timestamp != '':
-                time_list = timestamp.split('(')
-                punishment = 0
-                if len(time_list) == 2:
-                    punishment = re.search('\d+',time_list[1]).group()
-                problem = chr(i - 8 + ord('A'))
-                print(nickname,solved,change_time(time_list[0]), problem,punishment)
+        print(line.text.strip('\n'))
         break
 
 
 
+
 if __name__ == '__main__':
-    cid = input("比赛id：")
-    url = "http://acm.sdut.edu.cn/onlinejudge2/index.php/Home/Contest/contestranklist/cid/"
-    html = get_html(url+cid)
+    src = input("网址：").strip(' ')
+    html = getdata_json(src)
     analyze_html(html)
