@@ -1,13 +1,9 @@
 '''
-2019/7/9
-获取vj比赛数据
-2019/7/9  问题：代码没错误，没有运行结果
-          解决：Ubuntu系统上运行没有问题
-          总结：玄学
-2019/7/10 问题：加密比赛需要cookie
-          解决：
-          总结：
+2019/7/15
+获取ｃｆ数据
+
 '''
+
 from bs4 import BeautifulSoup
 import requests
 import random
@@ -15,8 +11,7 @@ import json
 import time
 import re
 
-
-def gethtml_json(url):
+def get_html(url):
     try:
         user = ['Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0',
                 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0)',
@@ -68,70 +63,15 @@ def gethtml_json(url):
                 'UCWEB7.0.2.37/28/999',
                 'NOKIA5700/ UCWEB7.0.2.37/28/999',
                 'Openwave/ UCWEB7.0.2.37/28/999',
-                'Mozilla/4.0 (compatible; MSIE 6.0; ) Opera/UCWEB7.0.2.37/28/999',]
+                'Mozilla/4.0 (compatible; MSIE 6.0; ) Opera/UCWEB7.0.2.37/28/999', ]
         header = {'User Agent': random.choice(user)}
         r = requests.get(url=url, headers=header, timeout=30)
         r.encoding = 'utf-8'
+        time.sleep(10)  # 蜗牛网速
         if r.status_code == 200:
-            time.sleep(10)
-            return json.loads(r.text)
+            return r.text
     except:
         return None
 
 def parser_html(html):
-    cid = html['id']
-    #begin = html['begin'] 开始时间
-    participants = html['participants']
-    submissions = html['submissions']
-    person_data = {}
-    #数据清洗
-    for i in submissions:
-        user = participants[i[0]][0]
-        #判断是否本校人员
-        solves = {}
-        problem = char(i[1] + 1)
-        result = i[2]
-        timestamp = i[3]
-        if result == 1:
-            solves[problem] = [result,timestamp,0]
-        else:
-            solves[problem] = [result, timestamp, 1]
-        '''
-        判断人员是否存在,不存在加入
-        人员已加入，判断此题是否提交过
-        提交过，AC过不记录，首次AC记录
-               WA记录次数（未曾AC），ＡＣ不记录
-        举例：
-        {’17121202036‘：{’A‘:[1,381,0(罚时记录)],'B':[0,4558,1]}}
-        '''
-        #没有此人提交记录，记录
-        if user not in  person_data:
-            person_data[user] = {solves}
-        else:
-            solved = person_data[user]    # 获取提交信息
-            # 此题没有提交过
-            if problem not in solved.keys():
-                solved[problem] = solves #更新此题信息
-                person_data[user] = solved  #更新人员信息
-            else:#已经提交过
-                #已ＡＣ
-                if solved[problem][0] == 1:
-                    continue
-                else:
-                    #首次提交ＡＣ
-                    if result == 1:
-                        solved[problem][0] = 1#更新结果
-                        solved[problem][1] = timestamp#更新时间
-                        person_data[user] = solved
-                    else:#再次ＷＡ掉
-                        solved[problem][2] += 1
-                        person_data[user] = solved
-
-if __name__=='__main__':
-    src = input("比赛id：")
-    urls = ['https://cn.vjudge.net/contest/rank/single/',
-            'https://vjudge.net/contest/rank/single/']
-    html = gethtml_json(random.choice(urls) + src)
-    parser_html(html)
-# 242368
-# 242368
+    soup = BeautifulSoup(html, 'html.parser')

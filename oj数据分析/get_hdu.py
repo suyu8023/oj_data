@@ -1,8 +1,9 @@
 '''
-2019/7/10
-SDUTOJ数据获取
+2019/7/15
+获取杭电数据
 
 '''
+
 from bs4 import BeautifulSoup
 import requests
 import random
@@ -10,10 +11,8 @@ import json
 import time
 import re
 
-def make_url(src):
-    pass
 
-def getdata_json(url):
+def get_html(url):
     try:
         user = ['Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0',
                 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0)',
@@ -66,31 +65,58 @@ def getdata_json(url):
                 'NOKIA5700/ UCWEB7.0.2.37/28/999',
                 'Openwave/ UCWEB7.0.2.37/28/999',
                 'Mozilla/4.0 (compatible; MSIE 6.0; ) Opera/UCWEB7.0.2.37/28/999', ]
-        header = {
-            'User Agent': random.choice(user),
-        "cookie":"Hm_lvt_ffc0a3cbaca7823cf2e81a8611a92d93=1562748127; _ga=GA1.3.168738533.1562748127; PHPSESSID=qb7n8m0vqo2cem0d886m08b6n0; _gid=GA1.3.1025147072.1562934709; _gat_gtag_UA_107784973_2=1; refer=%2F%2Facm.sdut.edu.cn%2Fonlinejudge2%2Findex.php%2FHome%2FContest%2Fproblemlist%2Fcid%2F2895"}
+        header = {'User Agent': random.choice(user)}
         r = requests.get(url=url, headers=header, timeout=30)
-        #print(url)
-        time.sleep(10)
-        print(r)
+        r.encoding = 'utf-8'
+        time.sleep(10)  # 蜗牛网速
         if r.status_code == 200:
-            print(r.text)
             return r.text
     except:
-        print("爬取失败")
         return None
+
+
+def change_time(timestamp):
+    time_list = timestamp.split(":")
+    return int(time_list[0]) * 3600 + int(time_list[1]) * 60 + int(time_list[2])
 
 def analyze_html(html):
     soup = BeautifulSoup(html, "html.parser")
     time.sleep(10)
-    for line in soup.tbody.find_all('tr'):
-        print(line.text.strip('\n'))
+    index = 0
+    length = len(soup.find('tr'))
+    print(length)
+    person_data = soup.find_all('td')
+    C_Data = len(person_data)
+    time.sleep(5)
+    for line in range(0,C_Data,length):
+        index += 1
+        if index == 1:
+            continue
+        print(line)
+        name = person_data[line + 1]
+        print(name.text)
+        solved = person_data[line + 2]
+        print(solved.text)
+        for i in range(0, length - 5):
+            timestamp = person_data[4 + i].text
+            print(timestamp)
+            if ':' in timestamp:
+                time_list = timestamp.split('(')
+                punishment = 0
+                if len(time_list) == 2:
+                    punishment = re.search('\d+',time_list[1]).group()
+                print(i)
+                problem = chr(i + ord('A'))
+                print(problem, change_time(time_list[0]), punishment)
         break
 
-
+        #for i in line.find_all('td'):
+        #    print(i)
 
 
 if __name__ == '__main__':
-    src = input("网址：").strip(' ')
-    html = getdata_json(src)
+    url = 'http://code.hdu.edu.cn/vcontest/vtl/ranklist/index/vtlid/7354/page/0'
+    html = get_html(url)
     analyze_html(html)
+    #cid = input('比赛id:')
+    #url = 'http://code.hdu.edu.cn/vcontest/vtl/ranklist/index/vtlid/'
