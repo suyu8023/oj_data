@@ -67,7 +67,7 @@ def get_html(url):
                 'Mozilla/4.0 (compatible; MSIE 6.0; ) Opera/UCWEB7.0.2.37/28/999', ]
         header = {'User Agent': random.choice(user)}
         r = requests.get(url=url, headers=header, timeout=30)
-        r.encoding = 'utf-8'
+        r.encoding = 'gb2312'
         time.sleep(10)  # 蜗牛网速
         if r.status_code == 200:
             return r.text
@@ -83,8 +83,7 @@ def analyze_html(html):
     soup = BeautifulSoup(html, "html.parser")
     time.sleep(10)
     index = 0
-    length = len(soup.find('tr'))
-    print(length)
+    length = len(soup.find('tr').find_all('td'))
     person_data = soup.find_all('td')
     C_Data = len(person_data)
     time.sleep(5)
@@ -92,31 +91,23 @@ def analyze_html(html):
         index += 1
         if index == 1:
             continue
-        print(line)
         name = person_data[line + 1]
         print(name.text)
+        print(name)
         solved = person_data[line + 2]
         print(solved.text)
-        for i in range(0, length - 5):
-            timestamp = person_data[4 + i].text
-            print(timestamp)
-            if ':' in timestamp:
+        for i in range(0, length - 4):
+            timestamp = person_data[4 + line].text
+            if ":" in timestamp:
                 time_list = timestamp.split('(')
                 punishment = 0
                 if len(time_list) == 2:
                     punishment = re.search('\d+',time_list[1]).group()
-                print(i)
                 problem = chr(i + ord('A'))
                 print(problem, change_time(time_list[0]), punishment)
-        break
-
-        #for i in line.find_all('td'):
-        #    print(i)
 
 
 if __name__ == '__main__':
-    url = 'http://code.hdu.edu.cn/vcontest/vtl/ranklist/index/vtlid/7354/page/0'
+    url = 'http://code.hdu.edu.cn/vcontest/vtl/ranklist/index/vtlid/7335/page/0'
     html = get_html(url)
     analyze_html(html)
-    #cid = input('比赛id:')
-    #url = 'http://code.hdu.edu.cn/vcontest/vtl/ranklist/index/vtlid/'
