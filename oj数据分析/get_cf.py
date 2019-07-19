@@ -75,3 +75,26 @@ def get_html(url):
 
 def parser_html(html):
     soup = BeautifulSoup(html, 'html.parser')
+    time.sleep(15)
+    rating_data = soup.find('table', attrs={'class':'tablesorter user-contests-table'}).tbody.find('tr')
+    if rating_data == None:
+        return False
+    else:
+        Rating = rating_data.find_all('td')
+        R_Rating = Rating[5].text
+        R_Rank = Rating[2].text
+        R_Times = Rating[0].text
+        print(R_Rating)
+        print(R_Rank)
+        print(R_Times)
+        print(detail_competition(cid=cid))
+
+#比赛详情网址
+def detail_competition(cid):
+        return 'http://codeforces.com/contests/with/' + cid
+
+if __name__=='__main__':
+        url = 'http://codeforces.com/contests/with/'
+        cid = input("账号：")
+        html = get_html(url + cid.strip())
+        parser_html(html)

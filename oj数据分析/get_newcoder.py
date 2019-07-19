@@ -84,24 +84,21 @@ def parser_html(html):
     print(Times)
 
 #进期比赛信息
-def Recent_competition(html):
-    data_json = json.loads(html)
-    for i in data_json['data']:
-        rating = i['rating']
-        print(rating)
-        rank = i['rank']
-        print(rank)
-        changeValue = i['changeValue']
-        print(changeValue)
-        Time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(i['time']/1000))
-        print(Time)
-        contestName = i['contestName']
-        print(contestName)
+# def Recent_competition(html):
+#     data_json = json.loads(html)
+#     for i in data_json['data']:
+#         rating = i['rating']
+#         print(rating)
+#         rank = i['rank']
+#         print(rank)
+#         changeValue = i['changeValue']
+#         print(changeValue)
+#         Time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(i['time']/1000))
+#         print(Time)
+#         contestName = i['contestName']
+#         print(contestName)
 
 if __name__ == '__main__':
-    url = input('网址：')
-    html = get_html(url)
-    Recent_competition(html)
 
     cid = input('用户id:')
     url = 'https://ac.nowcoder.com/acm/contest/profile/'
