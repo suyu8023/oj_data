@@ -70,68 +70,84 @@ def gethtml_json(url):
                 'Openwave/ UCWEB7.0.2.37/28/999',
                 'Mozilla/4.0 (compatible; MSIE 6.0; ) Opera/UCWEB7.0.2.37/28/999',]
         header = {'User Agent': random.choice(user)}
+        print(url)
         r = requests.get(url=url, headers=header, timeout=30)
         r.encoding = 'utf-8'
         if r.status_code == 200:
             time.sleep(10)
+            print(r.text)
             return json.loads(r.text)
     except:
         return None
 
 def parser_html(html):
+    if html == None:
+        return False
     cid = html['id']
-    #begin = html['begin'] 开始时间
-    participants = html['participants']
-    submissions = html['submissions']
+    participants = html["participants"]
+    submissions = html["submissions"]
     person_data = {}
-    #数据清洗
-    for i in submissions:
-        user = participants[i[0]][0]
-        #判断是否本校人员
-        solves = {}
-        problem = char(i[1] + 1)
-        result = i[2]
-        timestamp = i[3]
-        if result == 1:
-            solves[problem] = [result,timestamp,0]
-        else:
-            solves[problem] = [result, timestamp, 1]
-        '''
-        判断人员是否存在,不存在加入
-        人员已加入，判断此题是否提交过
-        提交过，AC过不记录，首次AC记录
-               WA记录次数（未曾AC），ＡＣ不记录
-        举例：
-        {’17121202036‘：{’A‘:[1,381,0(罚时记录)],'B':[0,4558,1]}}
-        '''
-        #没有此人提交记录，记录
-        if user not in  person_data:
-            person_data[user] = {solves}
-        else:
-            solved = person_data[user]    # 获取提交信息
-            # 此题没有提交过
-            if problem not in solved.keys():
-                solved[problem] = solves #更新此题信息
-                person_data[user] = solved  #更新人员信息
-            else:#已经提交过
-                #已ＡＣ
-                if solved[problem][0] == 1:
-                    continue
-                else:
-                    #首次提交ＡＣ
-                    if result == 1:
-                        solved[problem][0] = 1#更新结果
-                        solved[problem][1] = timestamp#更新时间
-                        person_data[user] = solved
-                    else:#再次ＷＡ掉
-                        solved[problem][2] += 1
-                        person_data[user] = solved
+
+    # cid = html['id']
+    #participants = html["participants"]
+    #submissions = html["submissions"]
+    #person_data = {}
+    # #数据清洗
+    # for i in submissions:
+    #     user = participants[i[0]][0]
+    #     print(user)
+    #     #判断是否本校人员
+    #     solves = {}
+    #     problem = chr(i[1] + 1)
+    #     print(problem)
+    #     result = i[2]
+    #     print(result)
+    #     timestamp = i[3]
+    #     print(timestamp)
+    #     if result == 1:
+    #         solves[problem] = [result,timestamp,0]
+    #     else:
+    #         solves[problem] = [result, timestamp, 1]
+    #     print(solves)
+    #     '''
+    #     判断人员是否存在,不存在加入
+    #     人员已加入，判断此题是否提交过
+    #     提交过，AC过不记录，首次AC记录
+    #            WA记录次数（未曾AC），ＡＣ不记录
+    #     举例：
+    #     {’17121202036‘：{’A‘:[1,381,0(罚时记录)],'B':[0,4558,1]}}
+    #     '''
+    #     #没有此人提交记录，记录
+    #     if user not in  person_data:
+    #         person_data[user] = {solves}
+    #     else:
+    #         solved = person_data[user]    # 获取提交信息
+    #         # 此题没有提交过
+    #         if problem not in solved.keys():
+    #             solved[problem] = solves #更新此题信息
+    #             person_data[user] = solved  #更新人员信息
+    #         else:#已经提交过
+    #             #已ＡＣ
+    #             if solved[problem][0] == 1:
+    #                 continue
+    #             else:
+    #                 #首次提交ＡＣ
+    #                 if result == 1:
+    #                     solved[problem][0] = 1#更新结果
+    #                     solved[problem][1] = timestamp#更新时间
+    #                     person_data[user] = solved
+    #                 else:#再次ＷＡ掉
+    #                     solved[problem][2] += 1
+    #                     person_data[user] = solved
+    #     for j in person_data.keys():
+    #         print(person_data[i])
 
 if __name__=='__main__':
     src = input("比赛id：")
     urls = ['https://cn.vjudge.net/contest/rank/single/',
             'https://vjudge.net/contest/rank/single/']
     html = gethtml_json(random.choice(urls) + src)
-    parser_html(html)
+    #parser_html(html)
 # 242368
 # 242368
+#260767

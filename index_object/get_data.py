@@ -1,6 +1,7 @@
 '''
 2019/7/19
 获取各比赛数据
+数据获取储存
 '''
 from bs4 import BeautifulSoup
 import requests
@@ -9,11 +10,11 @@ import json
 import time
 import re
 
-import get_newcoder
-import get_hdu
-import get_vj
-import get_oj
-import get_cf
+import index_object.get_newcoder
+import index_object.get_hdu
+import index_object.get_vj
+import index_object.get_oj
+import index_object.get_cf
 
 class crawl_data():
 

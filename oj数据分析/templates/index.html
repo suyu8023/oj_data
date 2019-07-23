@@ -1,26 +1,759 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>集训数据统计</title>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=9" />
+
+<title>Standings</title>
+
+<link type="text/css" rel="stylesheet" href="/onlinejudge2/Public/Home/bootstrap/css/bootstrap.min.css"/>
+<script language="javascript" type="text/javascript" src="/onlinejudge2/Public/Home/bootstrap/js/jquery-3.0.0.min.js"></script>
+<script language="javascript" type="text/javascript" src="/onlinejudge2/Public/Home/bootstrap/js/bootstrap.min.js"></script>
+<!--IE -->
+<script language="javascript" type="text/javascript" src="/onlinejudge2/Public/Home/bootstrap/js/html5shiv.min.js"></script>
+<script language="javascript" type="text/javascript" src="/onlinejudge2/Public/Home/bootstrap/js/respond.min.js"></script>
+<!--IE-->
+<link type="text/css" rel="stylesheet" href="/onlinejudge2/Public/Home/css/home.css?ver=20180513.1"/>
+<link type="text/css" rel="stylesheet" href="/onlinejudge2/Public/Home/css/base.css?ver=20180513.1"/>
+<link type="text/css" rel="stylesheet" href="/onlinejudge2/Public/Home/css/register.css?ver=20180217.1"/>
+<script language="javascript">
+	var stime = "1563780017";
+	function updatetime(){
+	stime ++;
+	var etime = new Date(parseInt(stime)*1000);
+	$("#dt").html(etime.toString("Y-m-d H:i:s"));
+	}
+	setInterval(updatetime,1000);
+</script>
 </head>
 <body>
-<table>
-    <thead>
-    <tr>
-        <th>Rank</th>
-        <th>Username</th>
-        <th>Nickname</th>
-        <th>School</th>
-        <th>SDUT OJ</th>
-        <th>VJ</th>
-        <th>CF</th>
-        <th>牛客</th>
-        <th>POJ</th>
-        <th>UVA</th>
-        <th>AtCoder</th>
-    </tr>
-    </thead>
-</table>
+<div class="everything">
+	<div class="banner">
+	    <div class="container">
+	    </div>
+	</div>
+
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="container">
+		        <div class="navbar-header">
+		        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+		        	<span class="sr-only">Toggle navigation</span>
+		        	<span class="icon-bar"></span>
+		        	<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+      			</button>
+		        	<a class="navbar-brand" href="/onlinejudge2/index.php/Home">Home</a>
+		        </div>
+
+		        <div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				    <li><a href="/onlinejudge2/index.php/Home/Index/problemlist">Problems</a></li>
+						<li><a href="/onlinejudge2/index.php/Home/Contest/contestlist/contestcategory/0">Contests</a></li>
+						<li><a href="/onlinejudge2/index.php/Home/Contest/contestlist/contestcategory/1">Experiments</a></li>
+				    <li><a href="/onlinejudge2/index.php/Home/Solution/status">Status</a></li>
+				    <li><a href="/onlinejudge2/index.php/Home/User/standings">Standings</a></li>
+				    <li><a href="/onlinejudge2/index.php/Home/Discuss/discusslist">Discuss</a></li>
+				    <li><a href="/onlinejudge2/index.php/Home/News/newslist">News</a></li>
+				</ul>
+									<ul class="nav navbar-nav navbar-right">
+					    <li><a href="/onlinejudge2/index.php/Home/Login/login">Login</a></li>
+					    <li><a href="/onlinejudge2/index.php/Home/User/register">Register</a></li>
+					</ul>		        </div> <!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+	</nav>
+
+	<script>
+	  	  sessionUid = 0;	</script>
+
+	<div class="main">
+
+<script src="/sdutacm_files/oj_alpha/theme/theme_uid2style.js?t=5212600"></script>
+<link type="text/css" rel="stylesheet" href="/sdutacm_files/oj_alpha/theme/theme.css?ver=20180406.1"/>
+<script src="/sdutacm_files/oj_alpha/theme/theme.js?ver=20180308.1"></script>
+<div class="container">
+	<div class="row block block-info">
+		<div class="form-inline">
+			<div class="pull-right pad">
+				<form name="" action="/onlinejudge2/index.php/Home/User/standings" method="get">
+				<div class="input-group input-group-sm">
+					<span class="input-group-addon">username</span>
+					<input class="form-control" type="text" name="username"
+					value = "" placeholder="Username">
+				</div>
+				<div class="input-group input-group-sm">
+					<span class="input-group-addon">nickname</span>
+					<input class="form-control" type="text" name="nickname"
+					value = "" placeholder="Nickname">
+				</div>
+				<div class="input-group input-group-sm">
+					<span class="input-group-addon">major</span>
+					<input class="form-control" type="text" name="major"
+					value = "" placeholder="Major">
+				</div>
+				<div class="input-group input-group-sm">
+					<span class="input-group-addon">class</span>
+					<input class="form-control" type="text" name="class"
+					value = "" placeholder="Class">
+				</div>
+				<button class="btn btn-default btn-sm" type="submit">search</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<table id="standings-table" class="table table-bordered table-hover">
+		    <thead>
+		        <tr>
+		            <th class="col-md-1">Rank</th>
+		            <th class="col-md-3">Username</th>
+		            <th class="col-md-4">Nickname</th>
+		            <th class="col-md-1">Solved</th>
+		            <th class="col-md-1">Submit</th>
+		            <th class="col-md-2">Ratio</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		    	<tr>
+                    <input type="hidden" value="18947" name="hid_uid">
+                    <td>1</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/18947">15110543103</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/18947.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/7e96c729f13dd869c9242be00df3d881?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">lxhjk150731刘洋</span>
+											</a>
+										</td>
+                    <td>1159</td>
+                    <td>1803</td>
+                    <td>64.28%</td>
+		        </tr><tr>
+                    <input type="hidden" value="16495" name="hid_uid">
+                    <td>2</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/16495">14110572003</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/16495.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/989d86177d9573a552f96e1dff457a0a?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">wy140103贾晓楠</span>
+											</a>
+										</td>
+                    <td>1057</td>
+                    <td>2338</td>
+                    <td>45.21%</td>
+		        </tr><tr>
+                    <input type="hidden" value="21060" name="hid_uid">
+                    <td>3</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/21060">MeiK</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/21060.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/c3b198bdf792357d0787881262d07997?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">MeiK</span>
+											</a>
+										</td>
+                    <td>963</td>
+                    <td>1970</td>
+                    <td>48.88%</td>
+		        </tr><tr>
+                    <input type="hidden" value="18980" name="hid_uid">
+                    <td>4</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/18980">15110572028</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/18980.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/a6ebdcb723b0c104d6da515026a32152?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">tak150128陈衍凯</span>
+											</a>
+										</td>
+                    <td>940</td>
+                    <td>2878</td>
+                    <td>32.66%</td>
+		        </tr><tr>
+                    <input type="hidden" value="16158" name="hid_uid">
+                    <td>5</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/16158">14110572101</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/16158.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/27f7948a206e6a9b4d08b73f9168f696?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">lxhrj140314宋金学</span>
+											</a>
+										</td>
+                    <td>930</td>
+                    <td>2510</td>
+                    <td>37.05%</td>
+		        </tr><tr>
+                    <input type="hidden" value="23615" name="hid_uid">
+                    <td>6</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/23615">16110502100</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/23615.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/4954906a071ef093fe0769b4e1b84d88?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">tx160320周恒阳</span>
+											</a>
+										</td>
+                    <td>901</td>
+                    <td>3737</td>
+                    <td>24.11%</td>
+		        </tr><tr>
+                    <input type="hidden" value="18721" name="hid_uid">
+                    <td>7</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/18721">15110581043</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/18721.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/242c599701532a26c25fd12bf4533b66?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">zhxw150202彭柏皓</span>
+											</a>
+										</td>
+                    <td>876</td>
+                    <td>1770</td>
+                    <td>49.49%</td>
+		        </tr><tr>
+                    <input type="hidden" value="16910" name="hid_uid">
+                    <td>8</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/16910">14110103101</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/16910.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/fd58c0b9114bb206d050c9e418b3337e?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">测控1403李标</span>
+											</a>
+										</td>
+                    <td>854</td>
+                    <td>2369</td>
+                    <td>36.05%</td>
+		        </tr><tr>
+                    <input type="hidden" value="16211" name="hid_uid">
+                    <td>9</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/16211">14110581048</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/16211.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/c2583a236eae36669b75c5d665cd9ba4?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">zxw140208刘子祥</span>
+											</a>
+										</td>
+                    <td>819</td>
+                    <td>2592</td>
+                    <td>31.6%</td>
+		        </tr><tr>
+                    <input type="hidden" value="16898" name="hid_uid">
+                    <td>10</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/16898">14110103069</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/16898.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/3eb9485ba878a1bea6a4ee28f42a0f20?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">ACM1402吕云飞</span>
+											</a>
+										</td>
+                    <td>774</td>
+                    <td>3457</td>
+                    <td>22.39%</td>
+		        </tr><tr>
+                    <input type="hidden" value="32030" name="hid_uid">
+                    <td>11</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/32030">17110506050</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/32030.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/9c04836158440b90e95e0b8c2ccb28a8?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">rj170206亓世恒</span>
+											</a>
+										</td>
+                    <td>751</td>
+                    <td>2218</td>
+                    <td>33.86%</td>
+		        </tr><tr>
+                    <input type="hidden" value="33494" name="hid_uid">
+                    <td>12</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/33494">17111202010</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/33494.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/d49cfcb0358ebd8d5461f3edb65bc619?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">ACM2017009信科1701亓玉宁</span>
+											</a>
+										</td>
+                    <td>737</td>
+                    <td>1734</td>
+                    <td>42.5%</td>
+		        </tr><tr>
+                    <input type="hidden" value="16188" name="hid_uid">
+                    <td>13</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/16188">14110581024</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/16188.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/a6ebdcb723b0c104d6da515026a32152?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">zxw140123王庆杰</span>
+											</a>
+										</td>
+                    <td>737</td>
+                    <td>1811</td>
+                    <td>40.7%</td>
+		        </tr><tr>
+                    <input type="hidden" value="16584" name="hid_uid">
+                    <td>14</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/16584">14110572095</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/16584.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/f5e9b4f303a665e8491fd79b8a9adf24?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">lxhrj140308孙铭</span>
+											</a>
+										</td>
+                    <td>722</td>
+                    <td>2782</td>
+                    <td>25.95%</td>
+		        </tr><tr>
+                    <input type="hidden" value="11765" name="hid_uid">
+                    <td>15</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/11765">xuechelingxiao</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/11765.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/8c8d2f516c78fa5ea9c232344c65b73d?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">计科1201_柴金鑫</span>
+											</a>
+										</td>
+                    <td>719</td>
+                    <td>2862</td>
+                    <td>25.12%</td>
+		        </tr><tr>
+                    <input type="hidden" value="23342" name="hid_uid">
+                    <td>16</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/23342">16110506066</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/23342.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/c7de27150dd90f7e13080ec65bfdb04b?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">rj160626程鑫</span>
+											</a>
+										</td>
+                    <td>707</td>
+                    <td>2229</td>
+                    <td>31.72%</td>
+		        </tr><tr>
+                    <input type="hidden" value="16787" name="hid_uid">
+                    <td>17</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/16787">a1s4z5</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/16787.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/88025f70214e2f7a02c7ee791b703b20?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">ACM2015信科1402金泽宇</span>
+											</a>
+										</td>
+                    <td>700</td>
+                    <td>1935</td>
+                    <td>36.18%</td>
+		        </tr><tr>
+                    <input type="hidden" value="16956" name="hid_uid">
+                    <td>18</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/16956">14110471009</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/16956.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/8e84f2291a3c805cda268ad1fa734fad?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">ACM2014电科本1401王劭阳</span>
+											</a>
+										</td>
+                    <td>690</td>
+                    <td>1370</td>
+                    <td>50.36%</td>
+		        </tr><tr>
+                    <input type="hidden" value="19139" name="hid_uid">
+                    <td>19</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/19139">15110506027</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/19139.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/a6ebdcb723b0c104d6da515026a32152?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">rchg150527赵成阳</span>
+											</a>
+										</td>
+                    <td>689</td>
+                    <td>2035</td>
+                    <td>33.86%</td>
+		        </tr><tr>
+                    <input type="hidden" value="31803" name="hid_uid">
+                    <td>20</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/31803">17110501070</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/31803.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/1140a3612f40c7591daf39f1f4e6f1b8?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">jk170629张明</span>
+											</a>
+										</td>
+                    <td>675</td>
+                    <td>2968</td>
+                    <td>22.74%</td>
+		        </tr><tr>
+                    <input type="hidden" value="15440" name="hid_uid">
+                    <td>21</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/15440">786676907</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/15440.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/9a60a81f888a0664a3d1229d38879b45?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">杨慧</span>
+											</a>
+										</td>
+                    <td>659</td>
+                    <td>1385</td>
+                    <td>47.58%</td>
+		        </tr><tr>
+                    <input type="hidden" value="23208" name="hid_uid">
+                    <td>22</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/23208">16120581058</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/23208.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/4954906a071ef093fe0769b4e1b84d88?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">jk160227孙佳丽</span>
+											</a>
+										</td>
+                    <td>659</td>
+                    <td>2900</td>
+                    <td>22.72%</td>
+		        </tr><tr>
+                    <input type="hidden" value="17244" name="hid_uid">
+                    <td>23</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/17244">14110502109</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/17244.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/487f87505f619bf9ea08f26bb34f8118?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">ACM2014通信1403胡永波</span>
+											</a>
+										</td>
+                    <td>651</td>
+                    <td>1677</td>
+                    <td>38.82%</td>
+		        </tr><tr>
+                    <input type="hidden" value="18967" name="hid_uid">
+                    <td>24</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/18967">15110572015</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/18967.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/a6ebdcb723b0c104d6da515026a32152?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">tak150115郝开发</span>
+											</a>
+										</td>
+                    <td>643</td>
+                    <td>2329</td>
+                    <td>27.61%</td>
+		        </tr><tr>
+                    <input type="hidden" value="4564" name="hid_uid">
+                    <td>25</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/4564">354898002</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/4564.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/aef4a804841369001de133d11b90e827?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">自在飞花</span>
+											</a>
+										</td>
+                    <td>642</td>
+                    <td>2265</td>
+                    <td>28.34%</td>
+		        </tr><tr>
+                    <input type="hidden" value="23572" name="hid_uid">
+                    <td>26</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/23572">16110502057</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/23572.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/4954906a071ef093fe0769b4e1b84d88?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">jk160641秦圣昭</span>
+											</a>
+										</td>
+                    <td>641</td>
+                    <td>2548</td>
+                    <td>25.16%</td>
+		        </tr><tr>
+                    <input type="hidden" value="16320" name="hid_uid">
+                    <td>27</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/16320">14120501080</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/16320.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/a6ebdcb723b0c104d6da515026a32152?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">xam140439王淑婷</span>
+											</a>
+										</td>
+                    <td>638</td>
+                    <td>1675</td>
+                    <td>38.09%</td>
+		        </tr><tr>
+                    <input type="hidden" value="18978" name="hid_uid">
+                    <td>28</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/18978">15110572026</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/18978.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/4a4716f8d2a0e47a72d285218041921d?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">tak150126梁乾</span>
+											</a>
+										</td>
+                    <td>634</td>
+                    <td>2381</td>
+                    <td>26.63%</td>
+		        </tr><tr>
+                    <input type="hidden" value="16319" name="hid_uid">
+                    <td>29</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/16319">14120501079</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/16319.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/a6ebdcb723b0c104d6da515026a32152?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">xam140438宋萍萍</span>
+											</a>
+										</td>
+                    <td>625</td>
+                    <td>1425</td>
+                    <td>43.86%</td>
+		        </tr><tr>
+                    <input type="hidden" value="16147" name="hid_uid">
+                    <td>30</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/16147">14120581077</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/16147.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/deb0d2452de737a376860c768b5504ea?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">zxw140235王聪</span>
+											</a>
+										</td>
+                    <td>623</td>
+                    <td>1366</td>
+                    <td>45.61%</td>
+		        </tr><tr>
+                    <input type="hidden" value="16548" name="hid_uid">
+                    <td>31</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/16548">14110572057</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/16548.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/a6ebdcb723b0c104d6da515026a32152?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">wy140213张友民</span>
+											</a>
+										</td>
+                    <td>622</td>
+                    <td>1363</td>
+                    <td>45.63%</td>
+		        </tr><tr>
+                    <input type="hidden" value="18228" name="hid_uid">
+                    <td>32</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/18228">sdut_elec</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/18228.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/2e4846c2126d5f95301e4ef0685a5ad6?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">ACM2014电气1401孟云帆</span>
+											</a>
+										</td>
+                    <td>618</td>
+                    <td>1213</td>
+                    <td>50.95%</td>
+		        </tr><tr>
+                    <input type="hidden" value="22978" name="hid_uid">
+                    <td>33</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/22978">16110501005</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/22978.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/265cd5210db952c0d5aa744797604f56?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">jk160505徐红博</span>
+											</a>
+										</td>
+                    <td>614</td>
+                    <td>3230</td>
+                    <td>19.01%</td>
+		        </tr><tr>
+                    <input type="hidden" value="22985" name="hid_uid">
+                    <td>34</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/22985">16110501012</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/22985.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/e2319995aedd97a70aa3fda0f33e7aaa?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">jk160512陈海星</span>
+											</a>
+										</td>
+                    <td>610</td>
+                    <td>3666</td>
+                    <td>16.64%</td>
+		        </tr><tr>
+                    <input type="hidden" value="11682" name="hid_uid">
+                    <td>35</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/11682">wolfred7464</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/11682.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/f2a334d15c82951691072dbdd30ec618?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">jk120406_部文杰</span>
+											</a>
+										</td>
+                    <td>607</td>
+                    <td>1740</td>
+                    <td>34.89%</td>
+		        </tr><tr>
+                    <input type="hidden" value="23205" name="hid_uid">
+                    <td>36</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/23205">16110581055</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/23205.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/92df17e32b78b156ec2ecaaf1ae597f4?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">jk160224赵忠斌</span>
+											</a>
+										</td>
+                    <td>605</td>
+                    <td>2569</td>
+                    <td>23.55%</td>
+		        </tr><tr>
+                    <input type="hidden" value="16303" name="hid_uid">
+                    <td>37</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/16303">14120501063</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/16303.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/a6ebdcb723b0c104d6da515026a32152?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">xam140422商丹华</span>
+											</a>
+										</td>
+                    <td>604</td>
+                    <td>1467</td>
+                    <td>41.17%</td>
+		        </tr><tr>
+                    <input type="hidden" value="23657" name="hid_uid">
+                    <td>38</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/23657">16110502142</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/23657.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/4954906a071ef093fe0769b4e1b84d88?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">jk160132陶鑫灿</span>
+											</a>
+										</td>
+                    <td>597</td>
+                    <td>2033</td>
+                    <td>29.37%</td>
+		        </tr><tr>
+                    <input type="hidden" value="16421" name="hid_uid">
+                    <td>39</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/16421">14110506013</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/16421.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/a6ebdcb723b0c104d6da515026a32152?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">qzhj140513郭庆爽</span>
+											</a>
+										</td>
+                    <td>596</td>
+                    <td>1560</td>
+                    <td>38.21%</td>
+		        </tr><tr>
+                    <input type="hidden" value="23260" name="hid_uid">
+                    <td>40</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/23260">16110581110</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/23260.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/d805118e7c26fc9b91670a9b6a924dc7?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">jk160416赵鉴兆</span>
+											</a>
+										</td>
+                    <td>595</td>
+                    <td>2387</td>
+                    <td>24.93%</td>
+		        </tr><tr>
+                    <input type="hidden" value="16218" name="hid_uid">
+                    <td>41</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/16218">14110581055</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/16218.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/a6ebdcb723b0c104d6da515026a32152?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">zxw140215刘旭</span>
+											</a>
+										</td>
+                    <td>594</td>
+                    <td>1450</td>
+                    <td>40.97%</td>
+		        </tr><tr>
+                    <input type="hidden" value="4362" name="hid_uid">
+                    <td>42</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/4362">zxw110129</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/4362.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/f498d790a1581f983b818f7daf85f3f5?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">Zombie-Queen</span>
+											</a>
+										</td>
+                    <td>588</td>
+                    <td>1357</td>
+                    <td>43.33%</td>
+		        </tr><tr>
+                    <input type="hidden" value="22981" name="hid_uid">
+                    <td>43</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/22981">16110501008</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/22981.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/4954906a071ef093fe0769b4e1b84d88?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">jk160508孙振强</span>
+											</a>
+										</td>
+                    <td>586</td>
+                    <td>2199</td>
+                    <td>26.65%</td>
+		        </tr><tr>
+                    <input type="hidden" value="19036" name="hid_uid">
+                    <td>44</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/19036">15110572084</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/19036.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/36e5c95a80ef5146f1ec8c01d53aee9a?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">wy150304韩伟峰</span>
+											</a>
+										</td>
+                    <td>581</td>
+                    <td>1584</td>
+                    <td>36.68%</td>
+		        </tr><tr>
+                    <input type="hidden" value="19839" name="hid_uid">
+                    <td>45</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/19839">15110103117</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/19839.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/347c3e5514b441da2b174043fda28044?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">ACM2015测控1503杨兴志</span>
+											</a>
+										</td>
+                    <td>573</td>
+                    <td>1189</td>
+                    <td>48.19%</td>
+		        </tr><tr>
+                    <input type="hidden" value="23249" name="hid_uid">
+                    <td>46</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/23249">16110581099</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/23249.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/4954906a071ef093fe0769b4e1b84d88?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">jk160405姚雪岩</span>
+											</a>
+										</td>
+                    <td>570</td>
+                    <td>2226</td>
+                    <td>25.61%</td>
+		        </tr><tr>
+                    <input type="hidden" value="18732" name="hid_uid">
+                    <td>47</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/18732">15110581054</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/18732.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/89db30bc79371d67a879086a05aa387c?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">zhxw150213王文豪</span>
+											</a>
+										</td>
+                    <td>569</td>
+                    <td>2253</td>
+                    <td>25.26%</td>
+		        </tr><tr>
+                    <input type="hidden" value="13673" name="hid_uid">
+                    <td>48</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/13673">13110572045</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/13673.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/a6ebdcb723b0c104d6da515026a32152?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">zhxqrj130205张明成</span>
+											</a>
+										</td>
+                    <td>569</td>
+                    <td>1838</td>
+                    <td>30.96%</td>
+		        </tr><tr>
+                    <input type="hidden" value="22995" name="hid_uid">
+                    <td>49</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/22995">16110501022</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/22995.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/4954906a071ef093fe0769b4e1b84d88?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">jk160522李赫</span>
+											</a>
+										</td>
+                    <td>566</td>
+                    <td>1870</td>
+                    <td>30.27%</td>
+		        </tr><tr>
+                    <input type="hidden" value="11308" name="hid_uid">
+                    <td>50</td>
+                    <td><a href="/onlinejudge2/index.php/Home/User/info/uid/11308">12110501127</a></td>
+										<td class="nowrap-td">
+											<a href="/onlinejudge2/index.php/Home/User/info/uid/11308.html">
+												<!--<img class="avatar avatar-sm inline-left-img hidden" src="https://cdn.v2ex.com/gravatar/098072d96e5dea5df96cfd3b9b39e949?s=32&d=mm&r=g&_t=434383">--><span class="inline-right-text">计科1204_徐福龙</span>
+											</a>
+										</td>
+                    <td>565</td>
+                    <td>1644</td>
+                    <td>34.37%</td>
+		        </tr>		    </tbody>
+		    <tfoot >
+			    <tr>
+			    	<td colspan="6">
+			    	<div class="bootpage ">
+					<div>  <span class="current">1</span><a class="num" href="/onlinejudge2/index.php?m=&c=User&a=standings&p=2">2</a><a class="num" href="/onlinejudge2/index.php?m=&c=User&a=standings&p=3">3</a><a class="num" href="/onlinejudge2/index.php?m=&c=User&a=standings&p=4">4</a><a class="num" href="/onlinejudge2/index.php?m=&c=User&a=standings&p=5">5</a><a class="num" href="/onlinejudge2/index.php?m=&c=User&a=standings&p=6">6</a><a class="num" href="/onlinejudge2/index.php?m=&c=User&a=standings&p=7">7</a><a class="num" href="/onlinejudge2/index.php?m=&c=User&a=standings&p=8">8</a><a class="num" href="/onlinejudge2/index.php?m=&c=User&a=standings&p=9">9</a><a class="num" href="/onlinejudge2/index.php?m=&c=User&a=standings&p=10">10</a><a class="num" href="/onlinejudge2/index.php?m=&c=User&a=standings&p=11">11</a> <a class="next" href="/onlinejudge2/index.php?m=&c=User&a=standings&p=2">下一页</a> <a class="end" href="/onlinejudge2/index.php?m=&c=User&a=standings&p=1012">1012</a></div>					<script type="text/javascript">
+						$(".bootpage div").addClass("btn-group btn-group-sm");
+						$(".bootpage a").addClass('btn btn-default ');
+						$(".bootpage span").addClass('btn btn-primary');
+					</script>
+				</div>
+			    	</td>
+			    </tr>
+		    </tfoot>
+		</table>
+	</div>
+</div>
+
+	<script>
+	  	  hasPerm = false;	</script>
+
+	</div>
+
+	<div class="footer">
+		<div class="container">
+		        <div class="row">
+		            <div class="col-sm-11 text-center">
+		                <a href="#">SDUTACM运维技术中心.</a>
+		            </div>
+		        </div>
+		        <div class="row">
+		            <div class="col-sm-11 text-center">
+                        <span id="dt"></span>
+                        <br/>
+		                <span>Copyright © 2013-2017 SDUTACM Team. All Rights Reserved.</span>
+		            </div>
+		        </div>
+		</div>
+	</div>
+</div>
 </body>
 </html>

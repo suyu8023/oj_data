@@ -19,7 +19,7 @@ class Get_vj():
             user = participants[i[0]][0]
             #判断是否本校人员
             solves = {}
-            problem = char(i[1] + 1)
+            problem = chr(i[1] + 1)
             result = i[2]
             timestamp = i[3]
             if result == 1:
