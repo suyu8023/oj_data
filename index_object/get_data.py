@@ -107,3 +107,25 @@ class crawl_data():
         except:
             return False
 
+    #爬取数据，导入数据库数据
+    def input_mysql(self,school, cid):
+        url = self.get_url(cid, school)
+        html = self.getdata_json(url, school)
+        if school == 'sdutoj':
+            #实例化
+            Oj = index_object.get_oj.Get_oj
+            Oj.parser_html(html)
+        elif school == 'cf':
+            Cf = index_object.get_cf.Get_oj
+            Cf.parser_html(html)
+        elif school == 'newcoder':
+            Nc = index_object.get_newcoder.Get_newcoder
+            Nc.parser_html(html)
+        elif school == 'hdu':
+            pass
+            Hdu = index_object.get_hdu.Get_hdu
+            Hdu.parser_html()
+        elif school == 'vj':
+            pass
+            Vj = index_object.get_vj.Get_vj
+            Vj.parser_html()

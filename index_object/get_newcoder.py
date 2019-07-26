@@ -25,7 +25,6 @@ class Get_newcoder():
     def detail_competition(self, cid):
         return 'https://ac.nowcoder.com/acm/contest/profile/' + cid
 
-
     #存入数据库
     def save_to_mysql(self, cid, rating, rank, times):
         con = pymysql.connect("localhost", "root", "admin", "_info")

@@ -10,10 +10,6 @@ import re
 
 class Get_oj():
 
-    def change_time(self, timestamp):
-        time_list = timestamp.split(":")
-        return int(time_list[0]) * 3600 + int(time_list[1]) * 60 + int(time_list[2])
-
     def parser_html(self, html):
         soup = BeautifulSoup(html, "html.parser")
         time.sleep(10)
@@ -32,6 +28,10 @@ class Get_oj():
                     problem = chr(i - 8 + ord('A'))
                     self.save_to_mysql(nickname,solved, self.change_time(time_list[0]), problem,punishment)
 
+    def change_time(self, timestamp):
+        time_list = timestamp.split(":")
+        return int(time_list[0]) * 3600 + int(time_list[1]) * 60 + int(time_list[2])
+
     def save_to_mysql(self,cid, nickname, solved, time, problem, punishiment):
         con = pymysql.connect("localhost", "root", "admin", "_info")
         cur = con.cursor()
@@ -41,8 +41,8 @@ class Get_oj():
         if cols.count() != 0:
                 return False
         else:
-            #oj平台,比赛id,nicjname,ＡＣ数量，用时（时间戳）
-            sql = "insert into values ('%s',%s','%s','%s','%s','%s','%s')" % ('oj', cid, nickname, solved, time,problem,punishiment,'1.0')
+            #oj平台,比赛id,nicjname,当前场比赛ＡＣ数量,题目ｉｄ，用时（时间戳），时间权重，难度权重
+            sql = "insert into values ('%s',%s','%s','%s','%s','%s','%s','%s','%s')" % ('oj', cid, nickname, solved, time,problem,punishiment,'1.0','1.0')
             cur.execute(sql)
             con.commit()
             # 判断命令是否成功执行

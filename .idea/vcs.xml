@@ -2,5 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ojdata_index" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/tempates/Hanlin-Dong.github.io(复件)" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/tempates/ojdata_index" vcs="Git" />
   </component>
 </project>
