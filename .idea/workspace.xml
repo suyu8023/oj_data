@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="52ff098b-3a4f-4be2-aa6c-4ba6a85809f2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/oj数据分析/Get_Vj.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/oj_data.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/oj_data.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index_object/get_cf.py" beforeDir="false" afterPath="$PROJECT_DIR$/index_object/get_cf.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index_object/get_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/index_object/get_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index_object/get_hdu.py" beforeDir="false" afterPath="$PROJECT_DIR$/index_object/get_hdu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index_object/reach.py" beforeDir="false" afterPath="$PROJECT_DIR$/index_object/reach.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oj数据分析/get_hdu.py" beforeDir="false" afterPath="$PROJECT_DIR$/oj数据分析/get_hdu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oj数据分析/get_vj.py" beforeDir="false" afterPath="$PROJECT_DIR$/oj数据分析/get_vj.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oj数据分析/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/oj数据分析/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index_object/get_vj.py" beforeDir="false" afterPath="$PROJECT_DIR$/index_object/get_vj.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -220,6 +211,7 @@
       <workItem from="1564222460223" duration="2347000" />
       <workItem from="1564320028832" duration="7000" />
       <workItem from="1565225260809" duration="25715000" />
+      <workItem from="1565335976924" duration="1691000" />
     </task>
     <servers />
   </component>
