@@ -32,7 +32,6 @@ class crawl_data():
             return cho['newcoder'] + cid
         else:
             return False
-
     #获取头部
     def get_header():
         user = ['Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0',
@@ -97,7 +96,6 @@ class crawl_data():
                 return r.text
         except:
             return False
-
     #爬取数据，导入数据库数据
     def input_mysql(self,school, cid, flag, passwd,):
         if school == 'vj':
