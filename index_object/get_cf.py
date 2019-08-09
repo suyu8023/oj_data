@@ -32,7 +32,7 @@ class Get_oj():
     def save_to_mysql(self, cid, rating, rank, times):
         con = pymysql.connect("localhost", "root", "admin", "comprtition_info")
         cur = con.cursor()
-        sql = 'select * from competition_info where school = "cf", cid = ' + '"' + cid + '"'
+        sql = 'select * from competition_info where school = "cf", cid = "' + cid + '"'
         cur.execute(sql)
         cols = cur.fetchall()
         if cols.count() != 0:

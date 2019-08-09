@@ -11,8 +11,9 @@ class reseach():
     def S_name_cid_school(self, name, cid, school):
 
         #查找姓名对应的账号
-        con = pymysql.connect("localhost", "root", "admin", "person_info")
+        con = pymysql.connect("localhost", "debian-sys-maint", "nX9Ic47NjOBe9YmU", "ojdata")
         cur = con.cursor()
+
         sql = 'select username from person_info where name = "' + name + '"'
         cur.execute(sql)
         cols = cur.fetchall()
@@ -22,8 +23,6 @@ class reseach():
             self.username = cols
         con.close()
         #查找账号，对应比赛信息
-        con = pymysql.connect("localhost", "root", "admin", "sdut_info")
-        cur = con.cursor()
         sql = 'select * from sdut_info where school = "' + school + '", cid = "' + cid + '", username = "' + name + '"'
         cur.execute(sql)
         cols = cur.fetchall()

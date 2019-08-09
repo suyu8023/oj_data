@@ -7,7 +7,6 @@
 from bs4 import BeautifulSoup
 import requests
 import random
-import json
 import time
 import re
 
@@ -79,35 +78,41 @@ def change_time(timestamp):
     time_list = timestamp.split(":")
     return int(time_list[0]) * 3600 + int(time_list[1]) * 60 + int(time_list[2])
 
-def analyze_html(html):
-    soup = BeautifulSoup(html, "html.parser")
-    time.sleep(10)
-    index = 0
-    length = len(soup.find('tr').find_all('td'))
-    person_data = soup.find_all('td')
-    C_Data = len(person_data)
-    time.sleep(5)
-    for line in range(0,C_Data,length):
-        index += 1
-        if index == 1:
-            continue
-        name = person_data[line + 1]
-        print(name.text)
-        print(name)
-        solved = person_data[line + 2]
-        print(solved.text)
-        for i in range(0, length - 4):
-            timestamp = person_data[4 + line].text
-            if ":" in timestamp:
-                time_list = timestamp.split('(')
-                punishment = 0
-                if len(time_list) == 2:
-                    punishment = re.search('\d+',time_list[1]).group()
-                problem = chr(i + ord('A'))
-                print(problem, change_time(time_list[0]), punishment)
+def parase_html(html):
+    soup = BeautifulSoup(html, 'html.parser')
+    name = soup.find_all('table')
+    for i in name:
+        print(i)
+
+# def analyze_html(html):
+#     soup = BeautifulSoup(html, "html.parser")
+#     time.sleep(10)
+#     index = 0
+#     length = len(soup.find('tr').find_all('td'))
+#     person_data = soup.find_all('td')
+#     C_Data = len(person_data)
+#     time.sleep(5)
+#     for line in range(0,C_Data,length):
+#         index += 1
+#         if index == 1:
+#             continue
+#         name = person_data[line + 1]
+#         print(name.text)
+#         print(name)
+#         solved = person_data[line + 2]
+#         print(solved.text)
+#         for i in range(0, length - 4):
+#             timestamp = person_data[4 + line].text
+#             if ":" in timestamp:
+#                 time_list = timestamp.split('(')
+#                 punishment = 0
+#                 if len(time_list) == 2:
+#                     punishment = re.search('\d+',time_list[1]).group()
+#                 problem = chr(i + ord('A'))
+#                 print(problem, change_time(time_list[0]), punishment)
 
 
 if __name__ == '__main__':
     url = 'http://code.hdu.edu.cn/vcontest/vtl/ranklist/index/vtlid/7335/page/0'
     html = get_html(url)
-    analyze_html(html)
+    parase_html(html)

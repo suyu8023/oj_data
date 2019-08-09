@@ -6,9 +6,7 @@
 from bs4 import BeautifulSoup
 import requests
 import random
-import json
 import time
-import re
 
 import index_object.get_newcoder
 import index_object.get_hdu

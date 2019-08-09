@@ -1,24 +1,124 @@
-{
-    146812: [[0, 'WA', 2, 1526], [3, 'AC', 0, 1945], [10, 'WA', 1, 3762], [1, 'AC', 0, 5407], [7, 'AC', 0, 87848], [5, 'AC', 0, 695689]],
- 李东庆　204071: [[3, 'AC', 0, 1546], [0, 'AC', 0, 1705], [10, 'AC', 0, 2379], [1, 'AC', 0, 5975], [4, 'AC', 0, 13343], [7, 'AC', 0, 14461]],
- 204260: [[0, 'AC', 0, 1758], [3, 'AC', 0, 2879], [10, 'AC', 0, 4349], [1, 'WA', 1, 13930]],
- 秦圣昭　144063: [[0, 'AC', 0, 1837], [3, 'WA', 1, 2942], [10, 'AC', 0, 4045], [1, 'AC', 0, 10741]],
- 222169: [[2, 'WA', 1, 2100], [3, 'AC', 0, 3816], [0, 'WA', 1, 8316], [10, 'AC', 0, 13262]],
- 222163: [[0, 'AC', 1, 5397], [3, 'AC', 0, 2996], [10, 'AC', 0, 6839], [1, 'WA', 1, 11598]],
- 154061: [[3, 'WA', 1, 3142], [0, 'WA', 1, 3425], [10, 'AC', 0, 9299]],
- 222184: [[3, 'AC', 0, 3176], [0, 'WA', 1, 8680], [10, 'AC', 0, 11683]],
- 222187: [[0, 'WA', 2, 3199], [3, 'AC', 1, 5082], [10, 'AC', 0, 7181], [1, 'AC', 0, 10590]],
- 204073: [[0, 'WA', 1, 3883], [3, 'WA', 1, 4544], [10, 'WA', 1, 9379], [1, 'AC', 0, 58610]],
- 222032: [[0, 'WA', 1, 3997], [3, 'AC', 0, 5769], [10, 'AC', 0, 9260]],
- 204076: [[0, 'WA', 1, 4277], [10, 'AC', 0, 4432], [3, 'AC', 0, 5021], [1, 'WA', 1, 9615]],
- 222167: [[0, 'AC', 0, 6317], [3, 'AC', 0, 10576]],
- 224173: [[0, 'WA', 1, 7780], [3, 'WA', 1, 51652]],
- 193055: [[0, 'WA', 1, 11750], [3, 'AC', 0, 13607]],
- 221092: [[3, 'AC', 1, 57123]],
- 程鑫　123519: [[1, 'AC', 0, 57705]],
- 173629: [[3, 'AC', 0, 58845], [1, 'WA', 1, 58880], [10, 'WA', 1, 60041]],
- 194727: [[10, 'AC', 0, 71341]],
- 208397: [[10, 'AC', 0, 74028]],
- 193106: [[3, 'WA', 1, 164582]],
- 陈先森　140539: [[1, 'WA', 1, 165098]],
- 梁剑锋　123538: [[5, 'AC', 0, 578459], [10, 'AC', 0, 580354]]}
+from datetime import datetime
+from json import decoder
+import requests
+import sqlite3
+# 获取头部
+def header():
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36'}
+    return headers
+# 爬虫模拟登陆
+def loginCrawler(url, data, header):    # 爬虫登陆
+    login_url = url + r'/user/login'
+    session = requests.session()#  跨请求保持某些参数
+    # cookie = http.cookiejar.CookieJar()
+    #
+    # handler = urllib.request.HttpCookieProcessor(cookie)
+    #
+    # opener = urllib.request.build_opener(handler)
+    #
+    # opener里面就保存了cookie
+    session.post(login_url, data=data, headers=header())
+    return session
+
+flag = False    # 标记比赛密码，防止比赛密码错误导致死循环
+
+def contestLogin(url, contest_id, session):     # 比赛登陆
+    login_url = url + r'/contest/login/' + contest_id
+    passwd = 'gongbutangjuan'
+    data = {'password': passwd}
+    session.post(login_url, data=data, headers=header())
+    global flag
+    flag = True
+    contestCrawler(url, contest_id, session)
+
+def contestCrawler(url, contest_id, session):   # 爬取比赛中的 rank 榜
+    try:
+        contest_url = url + r'/contest/rank/single/' + contest_id
+        print(contest_url)
+        response = session.get(contest_url)
+        response.raise_for_status()
+        json_dict = response.json()
+
+        time = json_dict['length'] / 1000
+        submit = {}
+
+        for sub in json_dict['submissions']:
+            if sub[2] == 1:
+                # 比赛成绩的 Rank
+                if sub[3] <= time:
+                    if not submit.get(str(sub[0])):
+                        submit[str(sub[0])] = 1
+                    else:
+                        submit[str(sub[0])] += 1
+
+        match_list = []
+        for k, v in json_dict['participants'].items():
+            if submit.get(k) and len(v[1]) >= 8:
+                match_list.append((v[0], v[1], submit[k]))
+
+        return match_list
+
+    except decoder.JSONDecodeError:
+        if not flag:
+            contestLogin(url, contest_id, session)
+        else:
+            print("比赛密码错误，请更新数据库中比赛 id = " + contest_id + " 的密码")
+            raise
+
+def finalContest(url, contest_id, session): # 爬取补题后的 rank 榜
+    contest_url = url + r'/contest/rank/single/' + contest_id
+    response = session.get(contest_url)
+    response.raise_for_status()
+    json_dict = response.json()
+    submit = {}
+    for sub in json_dict['submissions']:
+        if sub[2] == 1:
+            # 获取补题后的 Rank
+            if not submit.get(str(sub[0])):
+                submit[str(sub[0])] = 1
+            else:
+                submit[str(sub[0])] += 1
+
+    final_list = []
+    for k, v in json_dict['participants'].items():
+        if submit.get(k) and len(v[1]) >= 8:
+            final_list.append((v[0], v[1], submit[k]))
+
+    return final_list
+
+def contestData(db_file):   # 获取近一个月的比赛 id
+    connect = sqlite3.connect(db_file, timeout=30)
+    cursor = connect.cursor()
+    sql = 'SELECT id, contest_id, is_gain, begin_date FROM vj_contest'
+    contest = cursor.execute(sql)
+
+    contest_dict = {}
+    now_date = datetime.now().strftime('%Y-%m-%d')
+    for info in contest:
+        delta = now_date - datetime.strptime(info[3], '%Y-%m-%d')
+        if 0 < delta.days <= 30:
+            contest_dict[info[1]] = (info[0], info[2])
+
+    cursor.close()
+    contest.close()
+    return contest_dict
+
+def main():
+    url = r'https://cn.vjudge.net'
+    data = {'username': 'sdutacm', 'password': 'sdutacm'}
+    # contest = contestData(db_file)
+    contest = {'242359': (True, 1)}
+    session = loginCrawler(url, data, header)
+    for contest_id, temp in contest.items():
+        is_gain, con_id = temp
+        try:
+            if not is_gain:
+            match_list = contestCrawler(url, contest_id, session, con_id)
+            print(match_list)
+            final_list = finalContest(url, contest_id, session)
+            print(final_list)
+        except:
+            print('发生未知错误！')
+
+if __name__ == "__main__":
+    main()
