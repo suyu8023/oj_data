@@ -15,7 +15,7 @@ class Get_oj():
         soup = BeautifulSoup(html, 'html.parser')
         time.sleep(15)
         rating_data = soup.find('table', attrs={'class': 'tablesorter user-contests-table'}).tbody.find('tr')
-        if rating_data == False
+        if rating_data == False:
             return False
         else:
             Rating = rating_data.find_all('td')
