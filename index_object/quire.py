@@ -5,13 +5,13 @@
 import pymysql
 
 class Quire():
-    #单场比赛查询
+    #单场比赛查询（可以不要）
     def select_contest(self,cid):
         pass
     #姓名查询
     def select_name(self,name):
         pass
-    #年纪查询
+    #年级查询
     def select_grade(self,grade):
         pass
     #时间段查询

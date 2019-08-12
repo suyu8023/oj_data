@@ -8,7 +8,7 @@
 
     <style>
 
-        .body{
+        body{
             background-color: #FFFFF0;
         }
         .divisor{
@@ -16,7 +16,7 @@
            width:100%;
            color: black;
         }
-        .td
+        td
         {
             color: white;
             border-bottom: 1px solid #000000;
@@ -29,76 +29,58 @@
             border: 1px solid #000000;
             background-color: #ADADAD;
         }
-        .table
+        table
         {
             width: 90%;
             border: 2px solid #000000;
             margin: auto;
             color: white;
         }
-        .input-group {
-            position: relative;
-            display: table;
-            border-collapse: separate;
+        a
+        {
+            text-decoration: none;
         }
-        .input-group-addon{
-            padding: 6px 12px;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1;
-            color: #555;
-            text-align: center;
-            background-color: #eee;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .form-control {
-            display: block;
-            width: 100%;
-            height: 34px;
-            padding: 6px 12px;
-            font-size: 14px;
-            line-height: 1.42857143;
-            color: #555;
-            background-color: #fff;
-            background-image: none;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-}
     </style>
 </head>
 
-<body class="body">
+<body>
 
 <h1 class="divisor">——　Complete Ranking　——</h1>
 
-<div class="input-group input-group-sm">
-    <span class="input-group-addon">选择查询</span>
+<div>
+    <td>姓名：</td><input>
+    <td>年级：</td><input>
+    <td>学校：</td><input>
+    <td>选择查询 </td>
     <select>
-      <option value ="{{}}">{{}}</option>
+        <option value ="spring">春季集训</option>
+        <option value ="summer">暑假集训</option>
+        <option value ="autumn">秋季集训</option>
+        <option value ="winter">寒假集训</option>
     </select>
+     <button type="quire">查询</button>
 </div>
-<table class="table" cellspacing="10" cellpadding="20">
+<table cellspacing="10" cellpadding="20">
     <thead>
     <tr>
-        {{% for item in t_header %}}
-         <td class="td">{{ item }}</td>
-        {{%  endfor %}}
-
+        {% for item in t_header %}
+         <td>{{ item }}</td>
+        {%  endfor %}
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td class="tds"></td>
-        <td class="tds"></td>
-        <td class="tds"></td>
-        <td class="tds"></td>
-        <td class="tds"></td>
-        <td class="tds"></td>
-        <td class="tds"></td>
-        <td class="tds"></td>
-    </tr>
-
+     {% for item in t_rank %}
+        <tr>
+            <td class="tds">{{ item.school }}</td>
+            <td class="tds">{{ item.grade }}</td>
+            <td class="tds"><a href="{{ item.url }}">{{ item.name }}</a></td>
+            <td class="tds">{{ item.SDUTOJ }}</td>
+            <td class="tds">{{ item.VJ }}</td>
+            <td class="tds">{{ item.CF }}</td>
+            <td class="tds">{{ item.NC }}</td>
+            <td class="tds">{{ item.SUM }}</td>
+        </tr>
+    {%  endfor %}
     </tbody>
 </table>
 
