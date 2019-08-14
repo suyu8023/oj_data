@@ -8,7 +8,20 @@ importlib.reload(sys)
 
 app = Flask(__name__)  # 实例化app对象
 app.secret_key = 'sdutacm'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:acm506@127.0.0.1/ojdata'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+class LoginMessage(db.Model):
+    __tablename__ = 'consumers'
+    username = db.Column(db.String(16),primary_key=True)
+    password = db.Column(db.String(10))
+    grade = db.Column(db.String(10))
+    oj = db.Column(db.Float)
+    vj = db.Column(db.Float)
+    nc = db.Column(db.Float)
+    cf = db.Column(db.Float)
+    rank = db.Column(db.Float)
 
 @app.route('/', methods=['GET','POST'])
 def index():
@@ -113,4 +126,6 @@ def Admin():
     return render_template('Admin.html',pids=pid)
 
 if __name__ == '__main__':
+    db.drop_all() #删除表
+    db.create_all()
     app.run()
