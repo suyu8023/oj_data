@@ -1,0 +1,30 @@
+
+    .divisor{
+       text-align:center;
+       width:100%;
+       color: black;
+    }
+    td
+    {
+        color: white;
+        border-bottom: 1px solid #000000;
+        border-right: 1px solid #000000;
+        background-color: #999999;
+    }
+    .tds
+    {
+        color: white;
+        border: 1px solid #000000;
+        background-color: #ADADAD;
+    }
+    table
+    {
+        width: 90%;
+        border: 2px solid #000000;
+        margin: auto;
+        color: white;
+    }
+    a
+    {
+        text-decoration: none;
+    }

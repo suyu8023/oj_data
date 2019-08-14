@@ -41,7 +41,7 @@ class Get_oj():
         if cols.count() != 0:
                 return False
         else:
-            #oj平台,比赛id,nicjname,当前场比赛ＡＣ数量,题目ｉｄ，用时（时间戳），时间权重，难度权重
+            #oj平台,比赛id,nickname,当前场比赛ＡＣ数量,题目ｉｄ，用时（时间戳），时间权重，难度权重
             sql = "insert into values ('%s',%s','%s','%s','%s','%s','%s','%s','%s')" % ('oj', cid, nickname, solved, time,problem,punishiment,'1.0','1.0')
             cur.execute(sql)
             con.commit()

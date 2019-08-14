@@ -1,0 +1,56 @@
+<!--<!DOCTYPE html>-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PersonData</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/beautify.css')}}" type="text/css">
+</head>
+<body>
+SDUTOJ
+<table cellspacing="10" cellpadding="20">
+    <thead>
+    <tr>
+        {% for item in t_header %}
+         <td>{{ item }}</td>
+        {%  endfor %}
+    </tr>
+    </thead>
+    <tbody>
+     {% for item in oj %}
+        <tr>
+            <td class="tds">{{ item.school }}</td>
+            <td class="tds">{{ item.cid }}</td>
+            <td class="tds">{{ item.nickname }}</td>
+            <td class="tds">{{ item.name }}</td>
+            <td class="tds">{{ item.solved }}</td>
+            <td class="tds">{{ item.sum }}</td>
+        </tr>
+    {%  endfor %}
+    </tbody>
+</table>
+VJ
+<table cellspacing="10" cellpadding="20">
+    <thead>
+    <tr>
+        {% for item in t_header %}
+         <td>{{ item }}</td>
+        {%  endfor %}
+    </tr>
+    </thead>
+    <tbody>
+     {% for item in vj %}
+        <tr>
+            <td class="tds">{{ item.school }}</td>
+            <td class="tds">{{ item.cid }}</td>
+            <td class="tds">{{ item.nickname }}</td>
+            <td class="tds">{{ item.name }}</td>
+            <td class="tds">{{ item.solved }}</td>
+            <td class="tds">{{ item.sum }}</td>
+        </tr>
+    {%  endfor %}
+    </tbody>
+</table>
+<a href="#">CF</a>
+<a href="#">牛客</a>
+</body>
+</html>

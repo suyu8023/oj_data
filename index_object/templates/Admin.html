@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AddNews</title>
+</head>
+<body>
+批量导入用户
+    <input type="file"><br>
+    <input type="submit">
+导入用户
+    <form method="post">
+        <label>用户名：</label><input type="text" name="username" id="username" >
+        <br>
+        <label>姓  名：</label><input type="text" name="name" id="name" >
+        <br>
+        <label>密  码：</label><input type="text" name="password" id="password">
+        <br>
+        <label>专业班级：</label><input type="text" name="grade" id="grade" >
+        <br>
+        <label>学  校：</label><input type="text" name="school" id="school" >
+        <br>
+        <label>权  限：</label>
+        <select>
+        <option value ="teacher">教师</option>
+        <option value ="student">学生</option>
+        </select>
+        <input type="submit">
+        {% for message in get_flashed_messages() %}
+            {{message}}
+        {% endfor %}
+    </form>
+选择比赛平台
+    <select>
+        <option value ="SDUTOJ">SDUTOJ</option>
+        <option value ="VJ">VJ</option>
+    </select>
+    <label>比赛id：</label>
+    <input type="text" name="cid" id="cid">
+设置比赛权重
+{% for item in pids %}
+        <ul>
+            <li><label>题目ｉｄ {{ item }} 权重</label><input type="float" name="weight"></li>
+        </ul>
+    {%  endfor %}
+<input type="submit">
+</body>
+
+</html>

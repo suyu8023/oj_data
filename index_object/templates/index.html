@@ -5,48 +5,13 @@
     <meta charset="utf-8">
 
     <title>oj数据统计</title>
-
-    <style>
-
-        body{
-            background-color: #FFFFF0;
-        }
-        .divisor{
-           text-align:center;
-           width:100%;
-           color: black;
-        }
-        td
-        {
-            color: white;
-            border-bottom: 1px solid #000000;
-            border-right: 1px solid #000000;
-            background-color: #999999;
-        }
-        .tds
-        {
-            color: white;
-            border: 1px solid #000000;
-            background-color: #ADADAD;
-        }
-        table
-        {
-            width: 90%;
-            border: 2px solid #000000;
-            margin: auto;
-            color: white;
-        }
-        a
-        {
-            text-decoration: none;
-        }
-    </style>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/beautify.css')}}" type="text/css">
 </head>
 
 <body>
 
 <h1 class="divisor">——　Complete Ranking　——</h1>
-
+<a href="{{ Login }}">我是有身分的人</a>
 <div>
     <td>姓名：</td><input>
     <td>年级：</td><input>
