@@ -2,80 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="52ff098b-3a4f-4be2-aa6c-4ba6a85809f2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/index_object/Data_Formatting.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/index_object/Operate_mysql.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index_object/grade" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/index_object/web.py" beforeDir="false" afterPath="$PROJECT_DIR$/index_object/web.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index_object/write.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Login.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Progress.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Ranking.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Stepbystep.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/css/bootstrap-theme.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/css/bootstrap.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/css/custom-styles.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/css/font-awesome.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/css/materialize.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/font-awesome/fonts/fontawesome-webfontba72.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/font-awesome/fonts/fontawesome-webfontba72.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/font-awesome/fonts/fontawesome-webfontba72.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/font-awesome/fonts/fontawesome-webfontba72.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/font-awesome/fonts/fontawesome-webfontd41d.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/fonts/glyphicons-halflings-regular.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/fonts/glyphicons-halflings-regular.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/fonts/glyphicons-halflings-regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/fonts/glyphicons-halflings-regular.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/fonts/glyphicons-halflings-regulard41d.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/img/bg-img.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/js/Lightweight-Chart/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/js/Lightweight-Chart/chart.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/js/Lightweight-Chart/cssCharts.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/js/Lightweight-Chart/index - Copy.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/js/Lightweight-Chart/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/js/Lightweight-Chart/jquery.chart.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/js/Lightweight-Chart/jquery.chart.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/js/bootstrap.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/js/chart-data.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/js/chart.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/js/custom-scripts.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/js/dataTables/dataTables.bootstrap.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/js/dataTables/dataTables.bootstrap.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/js/dataTables/jquery.dataTables.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/js/easypiechart-data.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/js/easypiechart.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/js/morris/morris-0.4.3.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/js/morris/morris.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/js/morris/raphael-2.1.0.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/js/vue.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/css/materialize.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/css/materialize.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/fonts/roboto/Roboto-Bold.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/fonts/roboto/Roboto-Bold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/fonts/roboto/Roboto-Bold.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/fonts/roboto/Roboto-Bold.woff2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/fonts/roboto/Roboto-Light.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/fonts/roboto/Roboto-Light.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/fonts/roboto/Roboto-Light.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/fonts/roboto/Roboto-Light.woff2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/fonts/roboto/Roboto-Medium.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/fonts/roboto/Roboto-Medium.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/fonts/roboto/Roboto-Medium.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/fonts/roboto/Roboto-Medium.woff2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/fonts/roboto/Roboto-Regular.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/fonts/roboto/Roboto-Regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/fonts/roboto/Roboto-Regular.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/fonts/roboto/Roboto-Regular.woff2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/fonts/roboto/Roboto-Thin.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/fonts/roboto/Roboto-Thin.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/fonts/roboto/Roboto-Thin.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/fonts/roboto/Roboto-Thin.woff2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/js/materialize.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assets/materialize/js/materialize.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/empty.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/form.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/table.html" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -280,6 +208,7 @@
       <workItem from="1565746298018" duration="7275000" />
       <workItem from="1565769326320" duration="4127000" />
       <workItem from="1565829699847" duration="7071000" />
+      <workItem from="1565859893739" duration="3365000" />
     </task>
     <servers />
   </component>
@@ -328,6 +257,16 @@
           <url>file://$PROJECT_DIR$/oj数据分析/Get_Vj.py</url>
           <line>105</line>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/index_object/Operate_mysql.py</url>
+          <line>46</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/index_object/Operate_mysql.py</url>
+          <line>8</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

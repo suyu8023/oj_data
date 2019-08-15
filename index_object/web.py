@@ -2,6 +2,7 @@
 
 from flask import Flask, render_template,request,flash
 from flask_sqlalchemy import SQLAlchemy
+from index_object.Operate_mysql import Operate_mysql
 import importlib,sys
 importlib.reload(sys)
 
@@ -15,30 +16,7 @@ db = SQLAlchemy(app)
 @app.route('/', methods=['GET','POST'])
 def index():
     thead = ['学校','年级','姓名','SDUTOJ','VJ','CF','牛客','总分']
-    rank = [
-        {
-            'school':'SDUT',
-            'grade':"信科2017",
-            'name':"李雪",
-            'SDUTOJ':'531',
-            'VJ':'432',
-            'CF':'654',
-            'NC':'258',
-            'SUM':'1875',
-            'url':'index/persondata'
-        },
-        {
-            'school':'QNU',
-            'grade': "计科2017",
-            'name': "李四",
-            'SDUTOJ': '521',
-            'VJ': '472',
-            'CF': '674',
-            'NC': '28',
-            'SUM':'1695',
-            'url':'index/persondata'
-        }
-    ]
+    rank = query(Operate_mysql.create_consumer).order_by()
     login = '/index/login'
     return render_template('index.html',t_header=thead,t_rank=rank,Login=login)
 
