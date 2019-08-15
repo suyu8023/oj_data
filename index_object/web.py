@@ -2,7 +2,6 @@
 
 from flask import Flask, render_template,request,flash
 from flask_sqlalchemy import SQLAlchemy
-import index_object.reach
 import importlib,sys
 importlib.reload(sys)
 
@@ -12,30 +11,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:acm506@127.0.0.1/ojdata'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-class LoginMessage(db.Model):
-    __tablename__ = 'consumers'
-    username = db.Column(db.String(16),primary_key=True)
-    password = db.Column(db.String(10))
-    grade = db.Column(db.String(10))
-    school = db.Column(db.String(10))
-    oj = db.Column(db.Float)
-    vj = db.Column(db.Float)
-    nc = db.Column(db.Float)
-    cf = db.Column(db.Float)
-    rank = db.Column(db.Float)
-
-class Contests(db.Model):
-    __tablename__ = 'contests'
-    id = db.Model(db.INTEGER, primary_key=True)
-    # 用户名，比赛id，比赛时间，题目序号，题目提交时间，错误次数，难度权重，时间权重
-    username = db.Column()
-    cid = db.Column()
-    cid_time = db.Column()
-    pid = db.Column()
-    ac_time = db.Column()
-    submissions = db.Column()
-    difficult_weight = db.Column()
-    time_weight = db.Column()
 
 @app.route('/', methods=['GET','POST'])
 def index():
