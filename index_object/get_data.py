@@ -89,7 +89,6 @@ class crawl_data():
     #返回数据
     def getdata_json(self, url, school):
         try:
-
             r = requests.get(url=url, headers=self.get_header())
             time.sleep(30)
             if r.status_code == 200:

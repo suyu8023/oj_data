@@ -3,6 +3,7 @@
 '''
 import pymysql
 import openpyxl
+import index_object.Data_Formatting
 
 class Operate_mysql():
 
@@ -12,7 +13,20 @@ class Operate_mysql():
     # create table if not exists contests(username varchar(15),ojclass varchar(5),cid varchar(10),cid_time TIMESTAMP,pid varchar(5),ac_time varchar(20),submissions int,difficult_weight float,time_weight float)
     # create table if not exists rank_log(username varchar(15),school varchar(10),cid varchar(10),cid_time TIMESTAMP,intergration float)
 
+    Format = index_object.Data_Formatting.Data_Formatting
+
     # 数据库查询
+    def show_rank(self):
+        con = pymysql.connect("localhost", "root", "acm506", "ojdata")
+        cur = con.cursor()
+        sql = 'select school,grade,username,name,oj,vj,nc,cf,rank from info order by rank'
+        cur.execute(sql)
+        cols = cur.fetchall()
+        con.close()
+        if cols.count() != '':
+            return self.Format.show_rank(cols)
+        return False
+
     def select_public(self, username,name,grade,school):
         user ,nam,gra,sch = '','','',''
         if username != '':
@@ -33,7 +47,9 @@ class Operate_mysql():
         cur.execute(sql)
         cols = cur.fetchall()
         con.close()
-        return cols
+        if cols != '':
+            return self.Format.show_rank(cols)
+        return False
 
     def select_private(self, username,start_time,end_time):
         con = pymysql.connect("localhost", "root", "acm506", "ojdata")
@@ -44,9 +60,8 @@ class Operate_mysql():
         cols = cur.fetchall()
         con.close()
         if cols.count() != '':
-            return True
-        else:
-            return False
+            return self.Format.select_private(cols)
+        return False
 
     # 批量添加人员
     def add_persons(self,filename):

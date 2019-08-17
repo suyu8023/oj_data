@@ -8,14 +8,13 @@ importlib.reload(sys)
 
 app = Flask(__name__)
 app.secret_key = 'sdutacm'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:acm506@127.0.0.1/ojdata'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+
 
 
 @app.route('/', methods=['GET','POST'])
 def index():
-    thead = ['学校','年级','姓名','SDUTOJ','VJ','CF','牛客','总分']
+    # school,grade,username,name,oj,vj,nc,cf,rank
+    thead = ['学校','年级','username','姓名','SDUTOJ','VJ','CF','牛客','总分']
     rank = query(Operate_mysql.create_consumer).order_by()
     login = '/index/login'
     return render_template('index.html',t_header=thead,t_rank=rank,Login=login)
