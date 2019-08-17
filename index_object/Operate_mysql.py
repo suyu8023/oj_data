@@ -1,75 +1,117 @@
 '''
 2019/08/15
 '''
-from flask_sqlalchemy import SQLAlchemy
+import pymysql
+import openpyxl
 
 class Operate_mysql():
 
     # 创建数据表
-    def create_consumer(self, db):
-        __tablename__ = 'consumers'
-        username = db.Column(db.String(16),primary_key=True)
-        name = db.Column(db.String(10))
-        password = db.Column(db.String(10))
-        grade = db.Column(db.String(10))
-        school = db.Column(db.String(10))
-        oj = db.Column(db.Float)
-        vj = db.Column(db.Float)
-        nc = db.Column(db.Float)
-        cf = db.Column(db.Float)
-        rank = db.Column(db.Float)
-
-    def create_contests(self, db):
-        __tablename__ = 'contests'
-        id = db.Model(db.INTEGER, primary_key=True)
-        # 用户名，比赛平台，比赛id，比赛时间，题目序号，题目提交时间，错误次数，难度权重，时间权重
-        username = db.Column(db.String(16), db.ForeignKey('rank_log.cid'))
-        school = db.Column(db.String(10))
-        cid = db.Column(db.INTEGER)
-        cid_time = db.Column(db.String(20))
-        pid = db.Column(db.String(3))
-        ac_time = db.Column(db.String(10))
-        submissions = db.Column(db.INTEGER)
-        difficult_weight = db.Column(db.Float)
-        time_weight = db.Column(db.Float)
-
-    def create_rank(self,db):
-        __tablename__ = 'rank_log'
-        id = db.Model(db.INTEGER, primary_key=True)
-        username = db.Column(db.String(16))
-        school = db.Column(db.String(10))
-        # 关系引用
-        cid = db.relationship('self.create_contests', backref='employer')
-        cid_time = db.Column(db.String(20))
-        intergration = db.Column(db.Float)
+    # username ,name ,password ,grade ,school ,oj ,vj_account,vj,nc_account,nc,cf_account,cf_count,cf ,rank
+    # create table if not exists info(username varchar(15),name varchar(10),password varchar(10),limit int,grade varchar (5),school varchar(10),oj float,vj_account varchar(15),vj float,nc_account varchar(15),nc float,cf_account varchar(15),cf float,rank float)
+    # create table if not exists contests(username varchar(15),ojclass varchar(5),cid varchar(10),cid_time TIMESTAMP,pid varchar(5),ac_time varchar(20),submissions int,difficult_weight float,time_weight float)
+    # create table if not exists rank_log(username varchar(15),school varchar(10),cid varchar(10),cid_time TIMESTAMP,intergration float)
 
     # 数据库查询
-    def select_username(self, username):
-        pass
+    def select_public(self, username,name,grade,school):
+        user ,nam,gra,sch = '','','',''
+        if username != '':
+            user = 'username like "%' + username + '%"'
+        if name != '':
+            nam = 'name like "%' + name + '%"'
+        if grade != '':
+            gra = 'grade like "%' + grade + '%"'
+        if school != '':
+            sch = 'school like "%' + school + '%"'
+        join_str = ' and '
+        join_lis = [user if user != '',nam if nam != '',gra if gra != '',sch if sch != '']
+        select_where = join_str.join(join_lis)
 
-    def select_name(self, name):
-        pass
+        con = pymysql.connect("localhost", "root", "acm506", "ojdata")
+        cur = con.cursor()
+        sql = 'select school,grade,username,name,oj,vj,nc,cf,rank from info where' + select_where
+        cur.execute(sql)
+        cols = cur.fetchall()
+        con.close()
+        return cols
 
-    def select_grade(self, grade):
-        pass
+    def select_private(self, username,start_time,end_time):
+        con = pymysql.connect("localhost", "root", "acm506", "ojdata")
+        cur = con.cursor()
+        sql = 'select username,school,cid,intergration from info where username = %s and cid_time > %d and cid_time < %d' % \
+              ('"' + username + '"',start_time,end_time)
+        cur.execute(sql)
+        cols = cur.fetchall()
+        con.close()
+        if cols.count() != '':
+            return True
+        else:
+            return False
 
-    def select_time(self, start_time,end_time):
-        pass
-
-    # 人员添加
+    # 批量添加人员
     def add_persons(self,filename):
-        pass
+        con = pymysql.connect("localhost", "root", "acm506", "ojdata")
+        cur = con.cursor()
 
-    def add_person(self,db,username,name,password,grade,school):
-        user = self.create_consumer(username=username,name=name,password=password,grade=grade,school=school,oj=0,vj=0,nc=0,cf=0,rank=0)
-        db.sessionn.add(user)
-        db.sessionn.commit()
-        pass
+        wb = openpyxl.load_workbook(filename)
+        sheet_names = wb.sheetnames
+        sheet = wb[sheet_names[0]]
+        for i in range(sheet.max_row):
+            username = sheet.cell(row = i+1,column=1).value
+            name = sheet.cell(row = i+1, column=2).value
+            password = sheet.cell(row = i+1, column=3).value
+            grade = sheet.cell(row = i+1, column=4).value
+            school = sheet.cell(row = i+1, column=4).value
+            sql = "insert into info values ('%s','%s','%s','%s','%s','%f','%s','%f','%s','%f','%s','%f','%f','%d')" % (
+                username, name, password, grade, school, 0, '', 0, '', 0, '', 0, 0,1)
+            cur.execute(sql)
+            con.commit()
+        con.close()
+
+    # 添加个人
+    def add_person(self,username,name,password,grade,school):
+        con = pymysql.connect("localhost", "root", "acm506", "ojdata")
+        cur = con.cursor()
+        try:
+            sql = "insert into info values ('%s','%s','%s','%s','%s','%f','%s','%f','%s','%f','%s','%f','%f','%d')" % (
+                username, name, password, grade, school, 0,'',0,'',0,'',0,0,1)
+            cur.execute(sql)
+            con.commit()
+            con.close()
+        except:
+            return False
 
     #修改信息
-    def update_message(self,username,password):
-        pass
+    def update_message(self,username,password,limit):
+        con = pymysql.connect("localhost", "root", "acm506", "ojdata")
+        cur = con.cursor()
+        try:
+            if password != '':
+                sql = "update info set password = '%s' from info where username = '%s'" % (
+                    '"' + password + '"', '"' + username + '"')
+                cur.execute(sql)
+                con.commit()
+            if limit != '':
+                sql = "update info set limit = %d from info where username = %s" % (limit,username)
+                cur.execute(sql)
+                con.commit()
+            con.close()
+        except:
+            return False
 
     # 登录判断
     def judge_login(self,username, password):
-        pass
+        con = pymysql.connect("localhost", "root", "acm506", "ojdata")
+        cur = con.cursor()
+        try:
+            sql = "select name,limit from info where password = '%s' and username = '%s'" % (
+                '"' + password + '"', '"' + username + '"')
+            cur.execute(sql)
+            cols = cur.fetchall()
+            con.close()
+            if cols.count() == 0:
+                return False
+            else:
+                return cols[1]
+        except:
+            return False
