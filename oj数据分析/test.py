@@ -1,15 +1,8 @@
-import re
+import datetime
+from dateutil.relativedelta import relativedelta
 
-def write_grade(grade):
-    with open('grade.txt', 'r+') as f:
-        l = f.read()
-        print(l)
-        f.write(grade)
-    f.close()
-    with open('grade.txt', 'r+') as f:
-        l = f.read()
-        print(l)
-        f.write(grade)
-    f.close()
 
-write_grade(grade='5')
+end_time = datetime.datetime.now()
+print(end_time)
+start_time = datetime.datetime.now() - relativedelta(months=+1)
+print(start_time)

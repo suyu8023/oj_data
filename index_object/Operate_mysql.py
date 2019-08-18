@@ -3,7 +3,9 @@
 '''
 import pymysql
 import openpyxl
+import datetime
 import index_object.Data_Formatting
+from dateutil.relativedelta import relativedelta
 
 class Operate_mysql():
 
@@ -15,7 +17,7 @@ class Operate_mysql():
 
     Format = index_object.Data_Formatting.Data_Formatting
 
-    # 数据库查询
+    # 总排名
     def show_rank(self):
         con = pymysql.connect("localhost", "root", "acm506", "ojdata")
         cur = con.cursor()
@@ -26,7 +28,7 @@ class Operate_mysql():
         if cols.count() != '':
             return self.Format.show_rank(cols)
         return False
-
+    # 条件查询
     def select_public(self, username,name,grade,school):
         user ,nam,gra,sch = '','','',''
         if username != '':
@@ -51,11 +53,29 @@ class Operate_mysql():
             return self.Format.show_rank(cols)
         return False
 
-    def select_private(self, username,start_time,end_time):
+    #　进入个人比赛页面
+    def select_person(self, username,start_time,end_time):
+        if end_time == '':
+            end_time = datetime.datetime.now()
+        if start_time == '':
+            start_time = end_time - relativedelta(months=+1)
         con = pymysql.connect("localhost", "root", "acm506", "ojdata")
         cur = con.cursor()
         sql = 'select username,school,cid,intergration from info where username = %s and cid_time > %d and cid_time < %d' % \
               ('"' + username + '"',start_time,end_time)
+        cur.execute(sql)
+        cols = cur.fetchall()
+        con.close()
+        if cols.count() != '':
+            return self.Format.select_private(cols)
+        return False
+
+    # 查看单场比赛情况
+    def select_contests(self,username,cid):
+        con = pymysql.connect("localhost", "root", "acm506", "ojdata")
+        cur = con.cursor()
+        sql = 'select username,ojclass,cid,cid_time,pid,ac_time.submissions,difficult_weight,time_weight from contests where username = %s and cid = %s' % \
+              ('"' + username + '"', '"' + str(cid) + '"')
         cur.execute(sql)
         cols = cur.fetchall()
         con.close()

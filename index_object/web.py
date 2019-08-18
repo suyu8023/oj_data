@@ -10,55 +10,19 @@ app = Flask(__name__)
 app.secret_key = 'sdutacm'
 
 
-
 @app.route('/', methods=['GET','POST'])
 def index():
     # school,grade,username,name,oj,vj,nc,cf,rank
     thead = ['学校','年级','username','姓名','SDUTOJ','VJ','CF','牛客','总分']
-    rank = query(Operate_mysql.create_consumer).order_by()
+    rank = Operate_mysql.show_rank()
     login = '/index/login'
     return render_template('index.html',t_header=thead,t_rank=rank,Login=login)
 
 @app.route('/index/persondata')
 def Person_data():
-    #提交平台,比赛id,nickname,当前场比赛ＡＣ数量,题目ｉｄ，用时（时间戳），时间权重，难度权重
-    thead = ['提交平台','比赛id','nickname','姓名','AC','本场积分']
-    oj_data=[
-        {
-            'school':'oj',
-            'cid':'2726',
-            'nickname':'17121202036',
-            'name':'李雪',
-            'solved':'6',
-            'sum':'52'
-        },
-        {
-            'school': 'oj',
-            'cid': '27206',
-            'nickname': '17121202036',
-            'name':'李四',
-            'solved': '4',
-            'sum': '36'
-        }
-    ]
-    vj_data=[
-        {
-            'school': 'vj',
-            'cid': '2736',
-            'nickname': '17121202036',
-            'name':'赵四',
-            'solved': '2',
-            'sum': '32'
-        },
-        {
-            'school': 'vj',
-            'cid': '2456',
-            'nickname': '17121202036',
-            'name':'尼古拉斯·赵四',
-            'solved': '1',
-            'sum': '6'
-        }
-    ]
+    #username,school,cid,intergration
+    thead = ['username','oj平台','比赛id','积分']
+    oj_data =
     return render_template('Persondata.html',t_header=thead,oj=oj_data,vj=vj_data)
 
 @app.route('/index/login', methods=['GET','POST'])
