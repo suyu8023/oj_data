@@ -23,7 +23,7 @@ class Operate_mysql():
     # create table if not exists info(username varchar(15),name varchar(10),password varchar(10),grade varchar(5),school varchar(10),oj float,vj_account varchar(15),vj float,nc_account varchar(15),nc float,cf_account varchar(15),cf float,rank float,permission varchar(10))
     # create table if not exists contests(username varchar(15),ojclass varchar(5),cid varchar(10),cid_time TIMESTAMP,pid varchar(5),ac_time varchar(20),submissions int,difficult_weight float,time_weight float)
     # create table if not exists rank_log(username varchar(15),ojclass varchar(10),cid varchar(10),cid_time TIMESTAMP,intergration float,judge_add varchar(2))
-
+    # create table if not exists nc_cf(account varchar(10),ojclass varchar(10), Rating float, get_time TIMESTAMP)
     Format = index_object.Data_Formatting.Data_Formatting
 
     # 总排名

@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="52ff098b-3a4f-4be2-aa6c-4ba6a85809f2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/index_object/templates/Teacher.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index_object/Operate_mysql.py" beforeDir="false" afterPath="$PROJECT_DIR$/index_object/Operate_mysql.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index_object/get_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/index_object/get_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index_object/web.py" beforeDir="false" afterPath="$PROJECT_DIR$/index_object/web.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index_object/get_cf.py" beforeDir="false" afterPath="$PROJECT_DIR$/index_object/get_cf.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index_object/get_newcoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/index_object/get_newcoder.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -216,6 +215,7 @@
       <workItem from="1566032097406" duration="1863000" />
       <workItem from="1566109684026" duration="6443000" />
       <workItem from="1566177187591" duration="9346000" />
+      <workItem from="1566219462002" duration="3153000" />
     </task>
     <servers />
   </component>
