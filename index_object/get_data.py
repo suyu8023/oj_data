@@ -86,6 +86,7 @@ class crawl_data():
                 'Openwave/ UCWEB7.0.2.37/28/999',
                 'Mozilla/4.0 (compatible; MSIE 6.0; ) Opera/UCWEB7.0.2.37/28/999', ]
         return {'User Agent': random.choice(user)}
+
     #返回数据
     def getdata_json(self, url, school):
         try:
@@ -95,6 +96,7 @@ class crawl_data():
                 return r.text
         except:
             return False
+
     #爬取数据，导入数据库数据
     def input_mysql(self,school, cid, flag, passwd,):
         if school == 'vj':

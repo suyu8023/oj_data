@@ -1,5 +1,14 @@
 '''
 2019/08/15
+数据库：ojdata
+数据表：info,contests,rank_log
+info : 存放用户账号密码等信息，以及主页显示总排名信息
+contests : 存放每一场比赛详情
+rank_log : 用于显示最近每场比赛积分情况
+
+permission权限：student,teacher,admin
+add_judge:１个人，２已添加，３团队赛未添加
+
 '''
 import pymysql
 import openpyxl
@@ -10,10 +19,10 @@ from dateutil.relativedelta import relativedelta
 class Operate_mysql():
 
     # 创建数据表
-    # username ,name ,password ,grade ,school ,oj ,vj_account,vj,nc_account,nc,cf_account,cf_count,cf ,rank
-    # create table if not exists info(username varchar(15),name varchar(10),password varchar(10),limit int,grade varchar (5),school varchar(10),oj float,vj_account varchar(15),vj float,nc_account varchar(15),nc float,cf_account varchar(15),cf float,rank float)
+    # username ,name ,password ,grade ,school ,oj ,vj_account,vj,nc_account,nc,cf_account,cf_count,cf ,rank,permission
+    # create table if not exists info(username varchar(15),name varchar(10),password varchar(10),grade varchar(5),school varchar(10),oj float,vj_account varchar(15),vj float,nc_account varchar(15),nc float,cf_account varchar(15),cf float,rank float,permission varchar(10))
     # create table if not exists contests(username varchar(15),ojclass varchar(5),cid varchar(10),cid_time TIMESTAMP,pid varchar(5),ac_time varchar(20),submissions int,difficult_weight float,time_weight float)
-    # create table if not exists rank_log(username varchar(15),school varchar(10),cid varchar(10),cid_time TIMESTAMP,intergration float)
+    # create table if not exists rank_log(username varchar(15),ojclass varchar(10),cid varchar(10),cid_time TIMESTAMP,intergration float,judge_add varchar(2))
 
     Format = index_object.Data_Formatting.Data_Formatting
 
@@ -28,6 +37,7 @@ class Operate_mysql():
         if cols.count() != '':
             return self.Format.show_rank(cols)
         return False
+
     # 条件查询
     def select_public(self, username,name,grade,school):
         user ,nam,gra,sch = '','','',''
@@ -40,12 +50,12 @@ class Operate_mysql():
         if school != '':
             sch = 'school like "%' + school + '%"'
         join_str = ' and '
-        join_lis = [user if user != '',nam if nam != '',gra if gra != '',sch if sch != '']
+        join_lis = [user if user != '', nam if nam != '', gra if gra != '', sch if sch != '']
         select_where = join_str.join(join_lis)
 
         con = pymysql.connect("localhost", "root", "acm506", "ojdata")
         cur = con.cursor()
-        sql = 'select school,grade,username,name,oj,vj,nc,cf,rank from info where' + select_where
+        sql = 'select school,grade,username,name,oj,vj,nc,cf,rank from contests where' + select_where
         cur.execute(sql)
         cols = cur.fetchall()
         con.close()
@@ -61,7 +71,7 @@ class Operate_mysql():
             start_time = end_time - relativedelta(months=+1)
         con = pymysql.connect("localhost", "root", "acm506", "ojdata")
         cur = con.cursor()
-        sql = 'select username,school,cid,intergration from info where username = %s and cid_time > %d and cid_time < %d' % \
+        sql = 'select username,ojclass,cid,intergration from rank_log where username = %s and cid_time > %d and cid_time < %d' % \
               ('"' + username + '"',start_time,end_time)
         cur.execute(sql)
         cols = cur.fetchall()
@@ -97,8 +107,8 @@ class Operate_mysql():
             password = sheet.cell(row = i+1, column=3).value
             grade = sheet.cell(row = i+1, column=4).value
             school = sheet.cell(row = i+1, column=4).value
-            sql = "insert into info values ('%s','%s','%s','%s','%s','%f','%s','%f','%s','%f','%s','%f','%f','%d')" % (
-                username, name, password, grade, school, 0, '', 0, '', 0, '', 0, 0,1)
+            sql = "insert into info values ('%s','%s','%s','%s','%s','%f','%s','%f','%s','%f','%s','%f','%f','%s')" % (
+                username, name, password, grade, school, 0, '', 0, '', 0, '', 0, 0,'student')
             cur.execute(sql)
             con.commit()
         con.close()
@@ -108,8 +118,8 @@ class Operate_mysql():
         con = pymysql.connect("localhost", "root", "acm506", "ojdata")
         cur = con.cursor()
         try:
-            sql = "insert into info values ('%s','%s','%s','%s','%s','%f','%s','%f','%s','%f','%s','%f','%f','%d')" % (
-                username, name, password, grade, school, 0,'',0,'',0,'',0,0,1)
+            sql = "insert into info values ('%s','%s','%s','%s','%s','%f','%s','%f','%s','%f','%s','%f','%f','%s')" % (
+                username, name, password, grade, school, 0,'',0,'',0,'',0,0,'student')
             cur.execute(sql)
             con.commit()
             con.close()
@@ -117,19 +127,14 @@ class Operate_mysql():
             return False
 
     #修改信息
-    def update_message(self,username,password,limit):
+    def update_message(self,username,password):
         con = pymysql.connect("localhost", "root", "acm506", "ojdata")
         cur = con.cursor()
         try:
-            if password != '':
-                sql = "update info set password = '%s' from info where username = '%s'" % (
-                    '"' + password + '"', '"' + username + '"')
-                cur.execute(sql)
-                con.commit()
-            if limit != '':
-                sql = "update info set limit = %d from info where username = %s" % (limit,username)
-                cur.execute(sql)
-                con.commit()
+            sql = "update info set password = '%s' from info where username = '%s'" % (
+                '"' + password + '"', '"' + username + '"')
+            cur.execute(sql)
+            con.commit()
             con.close()
         except:
             return False
@@ -139,7 +144,7 @@ class Operate_mysql():
         con = pymysql.connect("localhost", "root", "acm506", "ojdata")
         cur = con.cursor()
         try:
-            sql = "select name,limit from info where password = '%s' and username = '%s'" % (
+            sql = "select name,permission from info where password = '%s' and username = '%s'" % (
                 '"' + password + '"', '"' + username + '"')
             cur.execute(sql)
             cols = cur.fetchall()
@@ -147,6 +152,10 @@ class Operate_mysql():
             if cols.count() == 0:
                 return False
             else:
-                return cols[1]
+                return cols[14]
         except:
             return False
+
+    # 团队赛，成绩附录
+    def results_dubbing(self,username,cid,username1,username2,username3):
+
