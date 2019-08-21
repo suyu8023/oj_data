@@ -5,7 +5,7 @@
 '''
 from bs4 import BeautifulSoup
 import requests
-import random
+import pymysql
 import json
 
 class Get_vj():
@@ -51,7 +51,13 @@ class Get_vj():
         person.append([key[1], key[2], 0 if key[2] == 1 else 1, key[3]])
         person_data[key[0]] = person
 
-    def wash_people(self, person_status, limit_time):
+    def wash_people(self, html,difficult,time_weight):
+        cid = html.get('id')
+        cid_time = html.get('begin') / 1000
+        person_status = html.get("submissions")
+        participants = html.get('participants')
+        limit_time = html.get('length') / 1000
+
         person_data = {}
         # 提交数据
         for key in person_status:
@@ -69,6 +75,16 @@ class Get_vj():
                     self.change_status(key, person_data)
                 else:
                     self.add_new_problem(key, person_data)
+
+        for key in person_data.keys():
+            username = participants[str(key)][0]
+            problem = person_data[key]
+            for it in problem:
+                pid = chr(it[0] + ord('A'))
+                ac_time = it[3] + cid_time
+                submissions = it[2]
+                if it[1] == 1:
+                    self.save_to_mysql(username,cid,cid_time,pid,ac_time,submissions,difficult,time_weight)
 
     def parase_json(self, url, contest_id, session):
         try:
@@ -94,5 +110,13 @@ class Get_vj():
         else:
             self.parase_json(url, contest_id, self.get_session(url))
 
-    def save_to_mysql(self,cid, nickname, solved, time, problem, punishiment):
-        pass
+    def save_to_mysql(self,username, cid, cid_time,pid,ac_time,submissions,difficult_weight,time_weight):
+        con = pymysql.connect("localhost", "root", "acm506", "ojdata")
+        cur = con.cursor()
+        # username,ojclass,cid,cid_time,pid,ac_time,submissions,difficult_weight,time_weight
+        sql = "insert into values ('%s','%s','%s','%s','%s','%s','%d','%d','%d')" % (
+        username, 'oj', cid, cid_time, pid, ac_time, submissions, difficult_weight, time_weight)
+        cur.execute(sql)
+        con.commit()
+        # 判断命令是否成功执行
+

@@ -80,6 +80,9 @@ def change_time(timestamp):
 def analyze_html(html):
     soup = BeautifulSoup(html, "html.parser")
     time.sleep(10)
+    c_time = soup.find('span', attrs={'id': "start-time",'class':"contest-progress-value"}).text
+    cid_time = time.mktime(time.strptime(c_time, "%Y-%m-%d %H:%M:%S"))
+    #print(cid_time)
     for line in soup.tbody.find_all('tr'):
         person_data = line.text.split('\n')
         length = len(person_data)

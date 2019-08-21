@@ -67,7 +67,8 @@ def Teacher():
         cid = request.form.get('cid')
         difficut_weight = request.form.get('difficult')
         time_weight = request.form.get('time')
-        #　判断页面是否可爬
+        if crawl_data.getdata_json(cid,ojclass):
+            pass
 
 @app.route('/Admin',methods=['GET','POST'])
 def Admin():

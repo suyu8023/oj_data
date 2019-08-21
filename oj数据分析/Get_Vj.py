@@ -103,7 +103,14 @@ def add_new_problem(key, person_data):
     person.append([key[1],key[2],0 if key[2]==1 else 1,key[3]])
     person_data[key[0]] = person
 
-def wash_people(person_status,limit_time):
+def wash_people(html,difficult_weight, time_weight):
+    # username,ojclass,cid,cid_time,pid,ac_time,submissions,difficult_weight,time_weight
+    cid = html.get('id')
+    cid_time = html.get('begin') / 1000
+    person_status = html.get("submissions")
+    participants = html.get('participants')
+    limit_time = html.get('length') / 1000
+
     person_data = {}
     # 提交数据
     for key in person_status:
@@ -122,6 +129,19 @@ def wash_people(person_status,limit_time):
             else:
                 add_new_problem(key,person_data)
     print(person_data)
+    for key in person_data.keys():
+        # username,ojclass,cid,cid_time,pid,ac_time,submissions,difficult_weight,time_weight
+        username = participants[str(key)][0]
+        print(username)
+        problem = person_data[key]
+        for it in problem:
+            pid = chr(it[0] + ord('A'))
+            ac_time = it[3] + cid_time
+            submissions = it[2]
+            if it[1] == 1:
+                print(username,cid,cid_time,pid,ac_time,submissions)
+
+
 
 def parase_json(url, contest_id, session):
     try:
@@ -132,8 +152,9 @@ def parase_json(url, contest_id, session):
         if html == None:
             return False
         submissions = html.get("submissions")
+        participants = html.get('participants')
         limit_time = html.get('length') / 1000
-        wash_people(submissions, limit_time)
+        wash_people(html, submissions, limit_time)
     except:
         return False
 

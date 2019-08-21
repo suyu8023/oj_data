@@ -10,14 +10,14 @@ import re
 
 class Get_oj():
 
-    def parser_html(self, html):
+    def parser_html(self, html,cid,difficult_weight,time_weight):
         soup = BeautifulSoup(html, "html.parser")
-        time.sleep(10)
+        c_time = soup.find('span', attrs={'id': "start-time", 'class': "contest-progress-value"}).text
+        cid_time = time.mktime(time.strptime(c_time, "%Y-%m-%d %H:%M:%S"))
         for line in soup.tbody.find_all('tr'):
             person_data = line.text.split('\n')
             length = len(person_data)
             nickname = person_data[5].strip('\t')
-            solved = person_data[6]
             for i in range(8,length-1):
                 timestamp = person_data[i].strip()# 未提交不记录
                 if timestamp != '':
@@ -26,24 +26,18 @@ class Get_oj():
                     if len(time_list) == 2:
                         punishment = re.search('\d+',time_list[1]).group()
                     problem = chr(i - 8 + ord('A'))
-                    self.save_to_mysql(nickname,solved, self.change_time(time_list[0]), problem,punishment)
+                    self.save_to_mysql(nickname, cid,cid_time,self.change_time(time_list[0]),problem,punishment,difficult_weight,time_weight)
 
     def change_time(self, timestamp):
         time_list = timestamp.split(":")
         return int(time_list[0]) * 3600 + int(time_list[1]) * 60 + int(time_list[2])
 
-    def save_to_mysql(self,cid, nickname, solved, time, problem, punishiment):
-        con = pymysql.connect("localhost", "root", "admin", "_info")
+    def save_to_mysql(self,nickname,cid,cid_time,pid,ac_time,submissions,difficult_weight,time_weight):
+        con = pymysql.connect("localhost", "root", "acm506", "ojdata")
         cur = con.cursor()
-        sql = 'select * from competition_info where school = "cf", cid = ' + '"' + cid + '"'
+        #username,ojclass,cid,cid_time,pid,ac_time,submissions,difficult_weight,time_weight
+        sql = "insert into values ('%s','%s','%s','%s','%s','%s','%d','%d','%d')" % (nickname,'oj', cid, cid_time, pid, ac_time, submissions, difficult_weight,time_weight)
         cur.execute(sql)
-        cols = cur.fetchall()
-        if cols.count() != 0:
-                return False
-        else:
-            #oj平台,比赛id,nickname,当前场比赛ＡＣ数量,题目ｉｄ，用时（时间戳），时间权重，难度权重
-            sql = "insert into values ('%s',%s','%s','%s','%s','%s','%s','%s','%s')" % ('oj', cid, nickname, solved, time,problem,punishiment,'1.0','1.0')
-            cur.execute(sql)
-            con.commit()
-            # 判断命令是否成功执行
+        con.commit()
+        # 判断命令是否成功执行
 

@@ -4,8 +4,12 @@
     <list default="true" id="52ff098b-3a4f-4be2-aa6c-4ba6a85809f2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index_object/Operate_mysql.py" beforeDir="false" afterPath="$PROJECT_DIR$/index_object/Operate_mysql.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index_object/get_cf.py" beforeDir="false" afterPath="$PROJECT_DIR$/index_object/get_cf.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index_object/get_newcoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/index_object/get_newcoder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index_object/get_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/index_object/get_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index_object/get_oj.py" beforeDir="false" afterPath="$PROJECT_DIR$/index_object/get_oj.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index_object/get_vj.py" beforeDir="false" afterPath="$PROJECT_DIR$/index_object/get_vj.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index_object/web.py" beforeDir="false" afterPath="$PROJECT_DIR$/index_object/web.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/oj数据分析/Get_Vj.py" beforeDir="false" afterPath="$PROJECT_DIR$/oj数据分析/Get_Vj.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/oj数据分析/get_oj.py" beforeDir="false" afterPath="$PROJECT_DIR$/oj数据分析/get_oj.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -73,7 +77,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="RunManager" selected="Python.Get_Vj">
     <configuration name="Persondata.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/oj_data/index_object/templates/Persondata.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
@@ -99,7 +103,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="get_oj" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="oj_data" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -107,12 +111,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/templates" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/oj数据分析" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/templates/app.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/oj数据分析/get_oj.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -167,11 +171,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Get_Vj" />
+        <item itemvalue="Python.get_oj" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.web" />
         <item itemvalue="JavaScript Debug.Persondata.html" />
-        <item itemvalue="Python.app" />
-        <item itemvalue="Python.Get_Vj" />
       </list>
     </recent_temporary>
   </component>
@@ -216,6 +220,7 @@
       <workItem from="1566109684026" duration="6443000" />
       <workItem from="1566177187591" duration="9346000" />
       <workItem from="1566219462002" duration="3153000" />
+      <workItem from="1566347057098" duration="9433000" />
     </task>
     <servers />
   </component>
@@ -267,7 +272,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/index_object/Operate_mysql.py</url>
-          <line>41</line>
+          <line>43</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -277,12 +282,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/index_object/Operate_mysql.py</url>
-          <line>96</line>
+          <line>98</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/index_object/web.py</url>
-          <line>72</line>
+          <line>73</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -298,8 +303,8 @@
     <SUITE FILE_PATH="coverage/oj_data$app.coverage" NAME="app Coverage Results" MODIFIED="1565590887665" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/templates" />
     <SUITE FILE_PATH="coverage/oj_data$get_hdu.coverage" NAME="get_hdu Coverage Results" MODIFIED="1564223594814" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/oj数据分析" />
     <SUITE FILE_PATH="coverage/oj_data$test.coverage" NAME="test Coverage Results" MODIFIED="1566114077924" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/oj数据分析" />
-    <SUITE FILE_PATH="coverage/oj_data$get_oj.coverage" NAME="get_oj Coverage Results" MODIFIED="1563007237611" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/oj数据分析" />
-    <SUITE FILE_PATH="coverage/oj_data$Get_Vj.coverage" NAME="Get_Vj Coverage Results" MODIFIED="1565335726529" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/oj数据分析" />
+    <SUITE FILE_PATH="coverage/oj_data$get_oj.coverage" NAME="get_oj Coverage Results" MODIFIED="1566350891785" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/oj数据分析" />
+    <SUITE FILE_PATH="coverage/oj_data$Get_Vj.coverage" NAME="Get_Vj Coverage Results" MODIFIED="1566357528406" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/oj数据分析" />
     <SUITE FILE_PATH="coverage/oj_data$get_newcoder.coverage" NAME="get_newcoder Coverage Results" MODIFIED="1563527029557" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/oj数据分析" />
     <SUITE FILE_PATH="coverage/oj_data$got_vj.coverage" NAME="got_vj Coverage Results" MODIFIED="1562940046977" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/oj_data$get_cf.coverage" NAME="get_cf Coverage Results" MODIFIED="1563524495338" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/oj数据分析" />

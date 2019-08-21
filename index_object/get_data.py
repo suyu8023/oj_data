@@ -88,17 +88,18 @@ class crawl_data():
         return {'User Agent': random.choice(user)}
 
     #返回数据
-    def getdata_json(self, url, school):
+    def getdata_json(self, cid,school):
         try:
+            url = self.get_url(cid,school)
             r = requests.get(url=url, headers=self.get_header())
             time.sleep(30)
-            if r.status_code == 200:
+            if r.status_code == 200 and r.text != None:
                 return r.text
         except:
             return False
 
     #爬取数据，导入数据库数据
-    def input_mysql(self,school, cid, flag, passwd,):
+    def input_mysql(self,school, cid, flag, passwd):
         if school == 'vj':
             Vj = index_object.get_vj.Get_vj
             Vj.contestLogin(self.get_url(cid, school), cid, flag, passwd, self.get_header())

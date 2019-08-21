@@ -20,7 +20,9 @@ class Operate_mysql():
 
     # 创建数据表
     # username ,name ,password ,grade ,school ,oj ,vj_account,vj,nc_account,nc,cf_account,cf_count,cf ,rank,permission
-    # create table if not exists info(username varchar(15),name varchar(10),password varchar(10),grade varchar(5),school varchar(10),oj float,vj_account varchar(15),vj float,nc_account varchar(15),nc float,cf_account varchar(15),cf float,rank float,permission varchar(10))
+    # create table if not exists info(username varchar(15),name varchar(10),password varchar(10),grade varchar(5),
+                                     # school varchar(10),oj float,vj_account varchar(15),vj float,nc_account varchar(15),
+                                     # nc float,cf_account varchar(15),cf float,rank float,permission varchar(10),)
     # create table if not exists contests(username varchar(15),ojclass varchar(5),cid varchar(10),cid_time TIMESTAMP,pid varchar(5),ac_time varchar(20),submissions int,difficult_weight float,time_weight float)
     # create table if not exists rank_log(username varchar(15),ojclass varchar(10),cid varchar(10),cid_time TIMESTAMP,intergration float,judge_add varchar(2))
     # create table if not exists nc_cf(account varchar(10),ojclass varchar(10), Rating float, get_time TIMESTAMP)
@@ -158,4 +160,5 @@ class Operate_mysql():
 
     # 团队赛，成绩附录
     def results_dubbing(self,username,cid,username1,username2,username3):
+        pass
 
