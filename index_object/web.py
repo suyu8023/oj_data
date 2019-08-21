@@ -47,25 +47,26 @@ def Login():
 
     return render_template('Login.html')
 
-@app.route('index/student', methods==['POST'])
+@app.route('/index/student', methods=['POST','GET'])
 def Student():
     if request.method == 'POST':
         username = request.form.get('username')
         cid = request.form.get('cid')
+        ojclass = request.form.get('ojclass')
         username1 = request.form.get('username1')
         username2 = request.form.get('username2')
         username3 = request.form.get('username3')
-        result = Operate_mysql.results_dubbing(username, cid, username1, username2, username3)
+        result = Operate_mysql.results_dubbing(username, cid, ojclass, username1, username2, username3)
         if result:
             return flash('成功添加！！！')
     return flash('添加失败！！！')
 
-@app.route('index/teacher', methods=['GET','POST'])
+@app.route('/index/teacher', methods=['GET','POST'])
 def Teacher():
     if request.method == 'POST':
         ojclass = request.form.get('ojclass')
         cid = request.form.get('cid')
-        difficut_weight = request.form.get('difficult')
+        difficult_weight = request.form.get('difficult')
         time_weight = request.form.get('time')
         if crawl_data.getdata_json(cid,ojclass):
             pass

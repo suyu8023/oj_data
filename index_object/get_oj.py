@@ -36,7 +36,7 @@ class Get_oj():
         con = pymysql.connect("localhost", "root", "acm506", "ojdata")
         cur = con.cursor()
         #username,ojclass,cid,cid_time,pid,ac_time,submissions,difficult_weight,time_weight
-        sql = "insert into values ('%s','%s','%s','%s','%s','%s','%d','%d','%d')" % (nickname,'oj', cid, cid_time, pid, ac_time, submissions, difficult_weight,time_weight)
+        sql = "insert into contests values ('%s','%s','%s','%s','%s','%s','%d','%d','%d')" % (nickname,'oj', cid, cid_time, pid, ac_time, submissions, difficult_weight,time_weight)
         cur.execute(sql)
         con.commit()
         # 判断命令是否成功执行

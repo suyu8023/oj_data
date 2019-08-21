@@ -7,7 +7,7 @@ contests : 存放每一场比赛详情
 rank_log : 用于显示最近每场比赛积分情况
 
 permission权限：student,teacher,admin
-add_judge:１个人，２已添加，３团队赛未添加
+add_judge:１个人，２已添加，３团队赛未添加,0团队赛添加
 
 '''
 import pymysql
@@ -51,8 +51,13 @@ class Operate_mysql():
             gra = 'grade like "%' + grade + '%"'
         if school != '':
             sch = 'school like "%' + school + '%"'
+        join_judge = [user, nam, gra, sch]
         join_str = ' and '
-        join_lis = [user if user != '', nam if nam != '', gra if gra != '', sch if sch != '']
+        join_lis = []
+        #user if user != '', nam if nam != '', gra if gra != '', sch if sch != ''
+        for it in join_judge:
+            if it != '':
+                join_lis.append(it)
         select_where = join_str.join(join_lis)
 
         con = pymysql.connect("localhost", "root", "acm506", "ojdata")
@@ -159,6 +164,34 @@ class Operate_mysql():
             return False
 
     # 团队赛，成绩附录
-    def results_dubbing(self,username,cid,username1,username2,username3):
-        pass
+    def results_dubbing(self,username,cid,ojclass,username1,username2,username3):
+        con = pymysql.connect("localhost", "root", "acm506", "ojdata")
+        cur = con.cursor()
+        try:
+            sql = "select * from rang_log where username = '%s' and cid = '%s'" % ('"' + username + '"','"' + cid + '"')
+            cur.execute(sql)
+            cols = cur.fetchall()
+            if cols.count() == 0 or cols[0][5]!='3':
+                return False
+            else:
+                #username varchar(15),ojclass varchar(10),cid varchar(10),cid_time TIMESTAMP,intergration float,judge_add varchar(2))
+                if username1 != '':
+                    sql1 = "insert into rank_log values ('%s','%s','%s','%s','%f','%s') " % (username1,ojclass,cid,cols[0][3],cols[0][3],'2')
+                    cur.execute(sql1)
+                    con.commit()
+                if username2 != '':
+                    sql2 = "insert into rank_log values ('%s','%s','%s','%s','%f','%s') " % (username2,ojclass, cid, cols[0][3], cols[0][3], '2')
+                    cur.execute(sql2)
+                    con.commit()
+                if username3 != '':
+                    sql3 = "insert into rank_log values ('%s','%s','%s','%s','%f','%s') " % (username3,ojclass,cid,cols[0][3],cols[0][3],'2')
+                    cur.execute(sql3)
+                    con.commit()
+                sql = "update rank_log set judge_add = '2' where username = '%s' and cid = '%s'" % ('"' + username + '"','"' + cid + '"')
+                cur.execute(sql)
+                con.commit()
+                con.close()
+                return True
+        except:
+            return False
 
